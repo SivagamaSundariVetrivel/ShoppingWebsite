@@ -15,7 +15,7 @@
 <title>Edit Supplier</title>
 </head>
 <body>
-<%@include file="newHead.jsp" %>
+<%@include file="mainHead.jsp" %>
 <center>
 <h2>Edit the Supplier ${sup.sname}</h2>
 <form:form method="post" action="./updateSupplier" commandName="supply">

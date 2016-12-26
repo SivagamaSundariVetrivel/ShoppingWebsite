@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.happy.model.Item;
 
-
-
 @Repository("itemDAO")
 public class ItemDAOImpl implements ItemDAO{
 
@@ -46,6 +44,7 @@ public class ItemDAOImpl implements ItemDAO{
 	 public Item getRowById(int id) {
 	  Session session = sessionFactory.openSession();
 	  Item p = (Item) session.load(Item.class, id);
+	  //session.close();
 	  return p;
 	 }
 

@@ -6,18 +6,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-  <meta charset="utf-8">
+<title>Product in Cart</title>
+<meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="<c:url value='/resources/bootstrap-3.3.6-dist/css/bootstrap.min.css'/>" />
+  <link rel="stylesheet" href="<c:url value='/resources/bootstrap-3.3.6-dist/css/bootstrap.min.css'/>">
   <script src="<c:url value='/resources/bootstrap-3.3.6-dist/js/jquery.min.js'/>"></script>
-  <script src="<c:url value='/resources/bootstrap-3.3.6-dist/js/bootstrap.min.js'/>"></script>
+  <script src="<c:url value='/resources/bootstrap-3.3.6-dist/js/bootstrap.min.js'/>"> </script>
 <title>Shipping Address</title>
 <style>
 form
 {
 background:white;
 margin-top: 100px;
-margin-right: 300px;
+margin-right: 400px;
 margin-left: 500px;
 }
 body{
@@ -32,60 +33,76 @@ body{
 <div id="signup" class="container-fluid">
 <br>
 <h2 class="page-header" style="color:grey;"><small>Shipping Address</small></h2>
-<form:form role="form" action="order" commandName="shipping" method="post" class="form-group">
+<form:form role="form" action="payNow?id=${order}" commandName="ship" method="post" class="form-group">
 <br>
 <div class="row">
 <div  class="col-sm-1">
 </div>
-<div  class="col-sm-3">
-    <label for="address">Address Line1:</label>
+<div  class="col-sm-4">
+    <label for="address">Address Line1<span style="color:red">*</span>:</label>
 </div>
 <div  class="col-sm-6">
-    <form:input type="text" class="form-control" path="addressLine1"/>
+    <form:input type="text" class="form-control" path="addressLine1" name="adL1" required="true"/>
 </div>
 </div><br>
 <div class="row">
 <div  class="col-sm-1">
 </div>
-<div  class="col-sm-3">
-    <label for="address">Address Line2:</label>
+<div  class="col-sm-4">
+    <label for="address">Address Line2<span style="color:red">*</span>:</label>
 </div>
 <div  class="col-sm-6">
-    <form:input type="text" class="form-control" path="addressLine2"/>
+    <form:input type="text" class="form-control" path="addressLine2" name="adL2" required="true"/>
 </div>
   </div><br>
   <div class="row">
 <div  class="col-sm-1">
 </div>
-<div  class="col-sm-3">
+<div  class="col-sm-4">
     <label for="address">Address Line3:</label>
 </div>
 <div  class="col-sm-6">
-    <form:input type="text" class="form-control" path="addressLine3"/>
+    <form:input type="text" class="form-control" path="addressLine3" name="adL3"/>
   </div>
-  <div  class="col-sm-3">
-    <label for="address">City:</label>
+  </div><br>
+    <div class="row">
+<div  class="col-sm-1">
+</div>
+  <div  class="col-sm-4">
+    <label for="address">City<span style="color:red">*</span>:</label>
 </div>
 <div  class="col-sm-6">
-    <form:input type="text" class="form-control" path="city"/>
+    <form:input type="text" class="form-control" path="city" name="adL4" required="true" pattern="[A-Za-z].{3,}" title="Invalid city name.."/> 
   </div>
-  <div  class="col-sm-3">
-    <label for="address">State:</label>
+  </div><br>
+    <div class="row">
+<div  class="col-sm-1">
+</div>
+  <div  class="col-sm-4">
+    <label for="address">State<span style="color:red">*</span>:</label>
 </div>
 <div  class="col-sm-6">
-    <form:input type="text" class="form-control" path="state"/>
+    <form:input type="text" class="form-control" path="state" name="adL5" required="true"  pattern="[A-Za-z].{3,}" title="Invalid state name.."/> 
   </div>
-  <div  class="col-sm-3">
-    <label for="country">Country:</label>
+   </div><br>
+    <div class="row">
+<div  class="col-sm-1">
+</div>
+  <div  class="col-sm-4">
+    <label for="country">Country<span style="color:red">*</span>:</label>
 </div>
 <div  class="col-sm-6">
-    <form:input type="text" class="form-control" path="country"/>
+    <form:input type="text" class="form-control" path="country" name="adL6" required="true"  pattern="[A-Za-z].{3,}" title="Invalid country name.."/> 
   </div>
-  <div  class="col-sm-3">
-    <label for="zipCode">PIN Code:</label>
+   </div><br>
+    <div class="row">
+<div  class="col-sm-1">
+</div>
+  <div  class="col-sm-4">
+    <label for="zipCode">PIN Code<span style="color:red">*</span>:</label>
 </div>
 <div  class="col-sm-6">
-    <form:input type="text" class="form-control" path="zipCode"/>
+    <form:input type="text" class="form-control" path="zipCode" name="adL7" required="true"  pattern="[0-9].{7}" title="Invalid PIN Code.."/> 
   </div>
 </div><br>
 <center>

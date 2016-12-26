@@ -15,7 +15,7 @@
 <title>Edit Product</title>
 </head>
 <body>
-<%@include file="newHead.jsp" %>
+<%@include file="mainHead.jsp" %>
 <center>
 <h2>Edit the Product ${pd.pname}</h2>
 <form:form method="post" action="./updateProduct" commandName="prod" enctype="multipart/form-data">
@@ -55,7 +55,12 @@
 <label for="supplier">Product's Supplier:</label>
 </div>
 <div class="col-sm-5">
-<form:select path="sid" value="${pd.sid}" class="form-control">
+<form:select path="sid" class="form-control">
+<option value="${pd.sid}">
+<c:forEach items="${sList}" var="sup">
+<c:if test="${sup.sid}==${pd.sid}">${sup.sname}</c:if>
+</c:forEach>
+</option>
 <c:forEach items="${sList}" var="sup">
 <option value="${sup.sid}">${sup.sname}</option>
 </c:forEach>
@@ -69,7 +74,12 @@
 <label for="category">Product's Category:</label>
 </div>
 <div class="col-sm-5">
-<form:select path="cid" value="${pd.cid}" class="form-control">
+<form:select path="cid" class="form-control">
+<option value="${pd.cid}">
+<c:forEach items="${cList}" var="cat">
+<c:if test="${cat.cid}==${pd.cid}">${cat.cname}</c:if>
+</c:forEach>
+</option>
 <c:forEach items="${listCate}" var="cat">
 <option value="${cat.cid}">${cat.cname}</option>
 </c:forEach>
@@ -104,7 +114,7 @@
 </div>
 <div class="col-sm-5">
 <form:input type="file" path="file" value="${pd.imgs}" name="file"/><%-- ${pd.imgs} --%>
-			<form:hidden path="imgs" value="${img}" alt="${pd.imgs}" /><!-- change img to pd.img -->
+			<form:hidden path="imgs" value="${img}" alt="${pd.imgs}" name="path" /><!-- change img to pd.img -->
 </div>
 </div> 
 <br> 

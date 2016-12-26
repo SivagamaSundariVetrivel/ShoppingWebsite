@@ -20,7 +20,7 @@
 <title>Add Supplier</title>
 </head>
 <body>
-<%@include file="newHead.jsp" %>
+<%@include file="mainHead.jsp" %>
 <center>
 <h2>Add a new Supplier</h2>
 </center>
@@ -31,7 +31,7 @@
 <label for="name">Supplier Name:</label>
 </div>
 <div class="col-sm-5">
-<form:input path="sname" class="form-control" placeholder="Supplier name"/>
+<form:input path="sname" class="form-control" placeholder="Supplier name" required="true"/>
 </div>
 </div>
 <br>

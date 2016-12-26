@@ -33,9 +33,6 @@ public class UserDAOImpl implements UserDAO{
 	  ur.setRoleId(us.getUid());
 	  ur.setRoleName("ROLE_ADMIN");
 	  ur.setRoleUserName(us.getUserName());
-	 /* Cart cart=new Cart();
-	  cart.setCartId(us.getUid());
-	  session.saveOrUpdate(cart);	 */ 
 	  session.saveOrUpdate(ur);
 	  session.saveOrUpdate(us);
 	  tx.commit();

@@ -65,7 +65,7 @@ body {
      </li>
      <li><a href="product">Product</a></li>
      <li><security:authorize access="hasRole('ROLE_ADMIN')">
-     <a href="/admin/adminHome">AdminHome</a>
+     <a href="/bmobiles/adminHome">AdminHome</a>
      </security:authorize></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -74,8 +74,14 @@ body {
     </form>
     <c:choose>
     <c:when test="${pageContext.request.userPrincipal.name!=null}">
-    <li><a href="#">${pageContext.request.userPrincipal.name}</a></li>
-    <li><a href="CartPage">Cart</a></li>
+    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">${pageContext.request.userPrincipal.name}<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+            	<!-- <li><a href="UserPage"></a>Profile</li> -->
+            	<li><a href="CartPage">Cart</a></li>
+              	<li><a href="OrderPage">Orders</a></li>
+            </ul>
+     </li>
+    
     <li><a href="javascript:document.getElementById('logout').submit()"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
     </c:when>
     <c:when test="${pageContext.request.userPrincipal.name==null}">
@@ -126,8 +132,8 @@ body {
                <input type="password" class="form-control" name="password" required>
             </div>
           </div><br>
-      to <a href="adminLogin" style="color:black;">ADMIN</a> Login
-      <br>
+      <!-- to <a href="adminLogin" style="color:black;">ADMIN</a> Login
+      <br> -->
      <!--  <div class="checkbox">
         <label><input type="checkbox"> Remember me</label>
       </div> -->

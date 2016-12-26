@@ -25,7 +25,7 @@
   </style>
 </head>
 <body>
-<%@include file="newHead.jsp"%>
+<%@include file="mainHead.jsp"%>
 <div class="container">
 <div class="row">
 <div class="col-sm-5">
@@ -39,6 +39,7 @@
 <div class="toRight">
 <!-- <button class="btn btn-success">Buy</button> -->
 <a class="btn btn-success" commandName="prod" href="addToCart?id=${product.pid}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to Cart</a>
+<a class="btn btn-danger" commandName="order" href="buyNow?id=${product.pid}"><!-- <i class="fa fa-shopping-cart" aria-hidden="true"></i> --> Buy Now</a>
 </div>
 </div>
 </div>

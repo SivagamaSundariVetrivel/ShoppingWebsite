@@ -22,7 +22,16 @@ public class AdminController {
 		return "adminLogin";
 	}
 	
-	@RequestMapping("/admin/adminHome")
+	@RequestMapping("/admin/index")
+	public ModelAndView gotoAdminIndex(Model m)
+	{
+		List catLt=categoryService.getList();
+		m.addAttribute("listCate", catLt);
+		return new ModelAndView("index");
+//		return "adminHome";
+	}
+	
+	@RequestMapping("/adminHome")
 	public ModelAndView gotoAdmin(Model m)
 	{
 		List catLt=categoryService.getList();

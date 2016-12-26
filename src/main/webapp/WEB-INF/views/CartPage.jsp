@@ -34,17 +34,16 @@
 <c:set var="totalPrice" value="${totalPrice+(pd.product.price*pd.quantity)}"></c:set>
 <tbody>
 <tr>
-<form:form action="updateItem" commandName="item" method="post">
-<td><form:hidden path="itemId" value="${pd.itemId}"/>  <img src="<c:url value="${pd.product.imgs}"/>" height="80px" width="50px"></td>
+<%-- <form:form action="editItem" commandName="item" method="post"> --%>
+<td><%-- <form:hidden path="itemId" value="${pd.itemId}"/> --%>  <img src="<c:url value="${pd.product.imgs}"/>" height="80px" width="50px"></td>
 <td>${pd.product.pname} <%-- <form:hidden path="product" value="${pd.product}"/> --%> </td>
-<td> <form:input class="form-control" path="quantity" id="quantity" name="quantity" value="${pd.quantity}"/></td>
+<td> ${pd.quantity}<%-- <form:input class="form-control" path="quantity" id="quantity" name="quantity" value="${pd.quantity}"/> --%></td>
 <td>Rs.${pd.product.price}</td>
 <td>Rs.${pd.product.price*pd.quantity}</td>
-<td><input type="submit" class="btn link" value="update"/>
-</td>
+<td><a type="submit" class="btn btn-warning" href="editItem?id=${pd.itemId}" commandName="item" >Update Quantity</a></td>
 <td><a commandName="item" href="deleteItem?id=${pd.itemId}">x</a></td>
 <td></td>
-</form:form>
+<%-- </form:form> --%>
 </tr>
 </tbody>
 </c:forEach>

@@ -23,7 +23,10 @@ public class ShippingAddress {
     private String zipCode;
 
     @OneToOne
-    private User customer;
+    private Orders order;
+    
+    /*@OneToOne
+    private User customer;*/
 
 	public int getShippingAddressId() {
 		return shippingAddressId;
@@ -89,14 +92,20 @@ public class ShippingAddress {
 		this.zipCode = zipCode;
 	}
 
-	public User getCustomer() {
+	public Orders getOrder() {
+		return order;
+	}
+
+	public void setOrder(Orders order) {
+		this.order = order;
+	}
+
+/*	public User getCustomer() {
 		return customer;
 	}
 
 	public void setCustomer(User customer) {
 		this.customer = customer;
-	}
-
-
+	}*/
     
 }

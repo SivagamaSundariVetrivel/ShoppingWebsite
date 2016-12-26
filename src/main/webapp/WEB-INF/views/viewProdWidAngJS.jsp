@@ -15,6 +15,7 @@
   <script src="<c:url value='/resources/bootstrap-3.3.6-dist/js/bootstrap.min.js'/>"> </script>
    <!-- angluarJS -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script> 
+  <!-- <script src="<c:url value='/resources/angular-1.5.8/angular.min.js'/>"></script> -->
   <!-- <scrip src="/resources/bootstrap-3.3.6-dist/js/angular.min.js"></scrip> -->
 <script>
 var v=${pdata};
@@ -27,7 +28,7 @@ angular.module('myApp',[]).controller('ProductController',function($scope)
 </script>
  </head>
 <body>
-<%@include file="newHead.jsp" %>
+<%@include file="mainHead.jsp" %>
 <br>
 <h4>Product to sale</h4>
  

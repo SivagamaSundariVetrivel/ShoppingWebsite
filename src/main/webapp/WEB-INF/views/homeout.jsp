@@ -44,7 +44,7 @@
 
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
-<%@include file="newHead.jsp" %>
+<%@include file="mainHead.jsp" %>
 
 <div class="container-fluid">
  <div class="row">
@@ -52,10 +52,14 @@
   </div>
   <div class="col-sm-7">  
   <div id="web">
-    <h1 class="page-header text-right" style="font-family:Snap ITC;color:#00BFFF;">b-mobiles</h1>
+    <h1 class="page-header text-right" style="font-family:Snap ITC;color:#00BFFF;">Welcome to <span style="font-family:Snap ITC;color:#00BFFF;">b-mobiles</span></h1>
+    <p style="color:green">Account has been created successfully....</p>
+    <h6 class="text-right">Click Login to login in Navigation bar</h6>
+    <br>
+    
     <p>Buy your new mobile from b-mobiles and make your BFF...</p>
     <p style="text-indent: 50px;">In this website, you able to find the phone that suit you. Please <strong>SignIn!</strong> to know about your new mobile phone.. This website provides you the information about all kind of phones.. You can order a prefect cell phone and get it at your doorstep on time..</p>
-    <p>Please click create/open your account and click on <kbd>Category</kbd> on Navigation bar to shop with us...</p>  
+    <p>Please click on <kbd>Category</kbd> or <kbd>Product</kbd> on Navigation bar to shop with us...</p>  
   </div>
   </div>
 <%--   <div class="col-sm-4 ">

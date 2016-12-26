@@ -21,7 +21,7 @@
 <title>Add Category</title>
 </head>
 <body>
-<%@include file="newHead.jsp" %>
+<%@include file="mainHead.jsp" %>
 <center>
 <h2>Add a new Category</h2>
 </center>
@@ -32,7 +32,7 @@
 <label for="name">Category Name:</label>
 </div>
 <div class="col-sm-5">
-<form:input path="cname" class="form-control" placeholder="Category name"/><br>
+<form:input path="cname" class="form-control" placeholder="Category name" required="true"/><br>
 <p style="color:red">${err}</p>
 </div>
 </div>

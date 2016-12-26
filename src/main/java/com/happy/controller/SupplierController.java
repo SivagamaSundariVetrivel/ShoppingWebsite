@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
+import com.happy.model.Category;
 import com.happy.model.Supplier;
 import com.happy.services.CategoryService;
 import com.happy.services.SupplierService;
@@ -26,14 +25,14 @@ public class SupplierController {
 	}
 
 	@Autowired
-	SupplierService SupplierService;
+	SupplierService supplierService;
 
 	@Autowired
 	CategoryService categoryService;
 
 	@RequestMapping("/addSupplier")
 	public ModelAndView toAddSupplier(@ModelAttribute("supply") Supplier supply,Model m) {
-		List ls = SupplierService.getList();
+		List ls = supplierService.getList();
 		List catLt=categoryService.getList();
 		m.addAttribute("listCate", catLt);
 		return new ModelAndView("addSupplier", "listsupply", ls);
@@ -44,7 +43,7 @@ public class SupplierController {
 
 	/*@RequestMapping("/viewSupplierWidAngJS")
 	public @ResponseBody ModelAndView toSupplierAngularJS(ModelMap m) {
-		List<Supplier> ls = SupplierService.getList();
+		List<Supplier> ls = supplierService.getList();
 		Gson gson = new Gson();
 		String st = gson.toJson(ls);
 		m.addAttribute("pdata", st);
@@ -55,8 +54,8 @@ public class SupplierController {
 
 	@RequestMapping(value = "saveSupplier", method = RequestMethod.POST)
 	public ModelAndView getSupplierForm(@ModelAttribute("supply") Supplier supply, ModelMap m) {
-		SupplierService.insertRow(supply);
-		List SupplierLt = SupplierService.getList();
+		supplierService.insertRow(supply);
+		List SupplierLt = supplierService.getList();
 		List catLt=categoryService.getList();
 		m.addAttribute("listCate", catLt);
 		return new ModelAndView("addSupplier", "listsupply", SupplierLt);
@@ -64,9 +63,9 @@ public class SupplierController {
 
 	@RequestMapping("/deleteSupplier")
 	public ModelAndView toDeleteSupply(@ModelAttribute("supply") Supplier supply, @RequestParam int id,Model m) {
-		SupplierService.deleteRow(id);
-		List ls = SupplierService.getList();
-		List catLt=categoryService.getList();
+		supplierService.deleteRow(id);
+		List<Supplier> ls = supplierService.getList();
+		List<Category> catLt=categoryService.getList();
 		m.addAttribute("listCate", catLt);
 		return new ModelAndView("addSupplier", "listsupply", ls);
 		/* return new ModelAndView("addSupplier"); */
@@ -75,7 +74,7 @@ public class SupplierController {
 
 	@RequestMapping("/viewSupplier")
 	public ModelAndView toListSupplier(@ModelAttribute("supply") Supplier supply,Model m) {
-		List ls = SupplierService.getList();
+		List ls = supplierService.getList();
 		List catLt=categoryService.getList();
 		m.addAttribute("listCate", catLt);
 		return new ModelAndView("viewSupplier", "listsupply", ls);
@@ -83,7 +82,7 @@ public class SupplierController {
 
 	@RequestMapping("/editSupplier")
 	public ModelAndView toEditSupplier(@ModelAttribute("supply") Supplier supply, @RequestParam int id,Model m) {
-		supply = SupplierService.getRowById(id);
+		supply = supplierService.getRowById(id);
 		List catLt=categoryService.getList();
 		m.addAttribute("listCate", catLt);
 		return new ModelAndView("editSupplier", "sup", supply);
@@ -91,8 +90,8 @@ public class SupplierController {
 
 	@RequestMapping(value="updateSupplier", method = RequestMethod.POST)
 	public ModelAndView toUpdateSupplier(@ModelAttribute("supply") Supplier supply,Model m) {
-		SupplierService.updateRow(supply);
-		List ls = SupplierService.getList();
+		supplierService.updateRow(supply);
+		List ls = supplierService.getList();
 		List catLt=categoryService.getList();
 		m.addAttribute("listCate", catLt);
 		return new ModelAndView("viewSupplier", "listsupply", ls);

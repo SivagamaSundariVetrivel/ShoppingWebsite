@@ -15,7 +15,7 @@
 
 </head>
 <body>
-<%@include file="newHead.jsp" %>
+<%@include file="mainHead.jsp" %>
 <h4>Categories</h4>
 <table class="table">
 <thead>

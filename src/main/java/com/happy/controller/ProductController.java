@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,7 +70,21 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/saveProduct", method = RequestMethod.POST)
-	public ModelAndView getProdForm(@ModelAttribute("prod") Product prod, ModelMap m) {
+	public ModelAndView getProdForm(@ModelAttribute("prod") Product prod, ModelMap m,HttpServletRequest req) {
+		  /*String price=req.getParameter("price");
+		  String quantity=req.getParameter("stock");
+		  if((Integer.parseInt("price")<=0)&&(Integer.parseInt("quantity")<=0))
+		  {
+				List productLt = productService.getList();
+				List ls1=supplierService.getList();
+				List ls2=categoryService.getList();
+				m.addAttribute("listCate", ls2);
+				m.addAttribute("sList", ls1);
+				m.addAttribute("err", "Stock and price cannot be 0 or less than 0..");
+				return new ModelAndView("addProduct", "listProd", productLt);
+		  }
+		  else
+		  {*/
 		  MultipartFile file = prod.getFile(); 
 		  String fileName = "";
 		  String image="";
@@ -102,17 +118,20 @@ public class ProductController {
 		m.addAttribute("listCate", ls2);
 		m.addAttribute("sList", ls1);
 		return new ModelAndView("addProduct", "listProd", productLt);
+		  /*}*/
 	}
 
 	@RequestMapping("/deleteProduct")
 	public ModelAndView toDeleteProd(@ModelAttribute("prod") Product prod, @RequestParam int id,Model m) {
+		prod=productService.getRowById(id);
+		m.addAttribute("deletedproduct", prod.getPname());
 		productService.deleteRow(id);
 		List ls = productService.getList();
 		List ls1=supplierService.getList();
 		List ls2=categoryService.getList();
 		m.addAttribute("listCate", ls2);
 		m.addAttribute("sList", ls1);
-		return new ModelAndView("addProduct", "listProd", ls);
+		return new ModelAndView("viewProduct", "listProd", ls);
 		/* return new ModelAndView("addProduct"); */
 
 	}
@@ -136,7 +155,13 @@ public class ProductController {
 	}
 
 	@RequestMapping(value="updateProduct", method = RequestMethod.POST)
-	public ModelAndView toUpdateProd(@ModelAttribute("prod") Product prod,ModelMap m) {
+	public ModelAndView toUpdateProd(@ModelAttribute("prod") Product prod,ModelMap m,HttpServletRequest r) {
+		if(r.getParameter("path").isEmpty())
+		{
+			productService.updateRow(prod,prod.getImgs()); 
+		}
+		else
+		{
 		MultipartFile file = prod.getFile(); 
 		  String fileName = "";
 		  String image="";
@@ -162,11 +187,13 @@ public class ProductController {
 			  }
 			 
 		  }
+		  productService.updateRow(prod,image); 
+		}
 		  List ls1=supplierService.getList();
 			List ls2=categoryService.getList();
 			m.addAttribute("listCate", ls2);
 			m.addAttribute("sList", ls1);
-		productService.updateRow(prod,image);
+		
 		List ls = productService.getList();
 		return new ModelAndView("viewProduct", "listProd", ls);
 		/*return new ModelAndView("viewProduct");*/

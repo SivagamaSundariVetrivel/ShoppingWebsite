@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.happy.model.Category;
 import com.happy.model.Product;
+import com.happy.model.User;
 import com.happy.services.CategoryService;
 import com.happy.services.ProductService;
 import com.happy.services.UserService;
@@ -32,6 +36,20 @@ public class UserController {
 	@Autowired
 	CategoryService categoryService;	
 
+	public String username;
+
+	@ModelAttribute
+	public String getuserdata(HttpServletRequest req) {
+		Authentication au = SecurityContextHolder.getContext().getAuthentication();
+		String name = au.getName();
+		HttpSession ses = req.getSession();
+		ses.setAttribute("u", name);
+		username = (String) ses.getAttribute("u");
+		System.out.println((String) ses.getAttribute("u"));
+		return name;
+
+	}
+
 	@RequestMapping("/login")
 	public String gotologin(@RequestParam(value="error",required = false) String error, @RequestParam(value="logout",required = false) String logout, Model model) 
 	{
@@ -47,39 +65,6 @@ public class UserController {
 		return  "loginvalid";
   	}
 	
-	@RequestMapping(value="/checkLogin",method=RequestMethod.POST)
-	public ModelAndView validateLogin(HttpServletRequest req,Model m)
-	{
-		String u=req.getParameter("username");
-		String pass=req.getParameter("password");
-		String use="admin";
-		List catLt=categoryService.getList();
-		m.addAttribute("listCate", catLt);
-//			List<User> users=userService.getList(); 
-//			if(users==null)
-//			{
-				if((u.equals("admin"))&&(pass.equals("admin")))
-				{
-					//m.addAttribute("userName", use);
-					return new ModelAndView("adminHome","userName", use);
-			}
-				else
-				{
-					//m.addAttribute("noSuchUsr","Invalid user or password");
-					return new ModelAndView("adminLogin","noSuchUsr","Invalid admin or password");
-				}	
-			}
-			/*else
-			{
-				for(User us:users)
-				{
-					if((us.getEmail().equals(u))&&(us.getPassword().equals(pass)))
-					{
-						m.addAttribute("userName",us.getUserName());
-						return new ModelAndView("userIndex");					}
-			}
-			}
-	}*/
 		
 	
 
@@ -141,5 +126,22 @@ public class UserController {
 			return new ModelAndView("index");
 		}
 		
-				
+		@RequestMapping("UserPage")
+		public ModelAndView userPage(/*@ModelAttribute ("user")User user,*/Model m){
+			List catLt=categoryService.getList();
+			m.addAttribute("listCate", catLt);
+			//m.addAttribute("userName", username);
+			User user=new User();
+			List<User> userLt=userService.getList();
+			for(User u:userLt)
+			{
+				if(u.getUserName().equals(username))
+				{
+					user=userService.getRowById(u.getUid());
+					break;
+				}
+			}
+			m.addAttribute("user", user);
+			return new ModelAndView("UserPage");
+		}				
 }

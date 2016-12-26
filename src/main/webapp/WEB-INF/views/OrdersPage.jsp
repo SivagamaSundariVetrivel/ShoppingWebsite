@@ -41,12 +41,12 @@
 </c:forEach>
 <tr class="info">
 <td colspan="4" align=right><strong>Total Price</strong></td>
-<td>Rs.${totalPrice}</td><hidden name="total" value="${totalPrice}"/>
+<td>Rs.${totalPrice}</td><%-- <hidden name="total" value="${totalPrice}"/> --%>
 <tr>
 </table>
 <div align="center">
 <a href="CartPage" class="btn btn-danger" style="color:white">Back</a>
-<a href="payNow" class="btn btn-success" method="post" style="color:white">Pay</a>
+<a href="orderNow?total=${totalPrice}" class="btn btn-success" method="post" style="color:white">Conform Order</a>
 </div>
 <div align="right">
 </div>

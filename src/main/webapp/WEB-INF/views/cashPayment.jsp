@@ -31,8 +31,48 @@ color: white;
 </style>
 </head>
 <body>
+<form method="post" action="./sendEmail" for="form" class="form-group">
+			<table border="0" width="50%">
+				<tr>
+					<!-- <td style="background-color:rgb(0, 0, 0);color:white">To:</td> -->
+					<td><input type="hidden" value="${email}" name="recipient" size="65" /></td>
+				</tr> 
+				<tr>
+					<!-- <td style="background-color:rgb(0, 0, 0);color:white">Subject:</td> -->
+					<td><input type="hidden" name="subject" size="65" value="Order Conformation..."/></td>
+				</tr> 
+				<tr>
+					<!-- <td style="background-color:rgb(0, 0, 0);color:white">Message:</td> -->
+					<td><textarea  cols="1" rows="1" name="message" style="display:none;">The products you have ordered are listed below:					
+					<c:set var="totalPrice" value="0"></c:set><c:forEach var="pd" items="${cart}"><c:set var="totalPrice" value="${totalPrice+(pd.product.price*pd.quantity)}"></c:set>
+Product Name: ${pd.product.pname}
+Quantity: ${pd.quantity}
+Price: Rs.${pd.product.price}
+
+</c:forEach>Total Price:Rs.${totalPrice}
+
+The above products are delivered to the address below:
+${shippingDetials.addressLine1},
+${shippingDetials.addressLine2},
+${shippingDetials.addressLine3},
+${shippingDetials.city}-${shippingDetials.zipCode}
+${shippingDetials.state}
+${shippingDetials.country}
+
+
+Thank you for your purchase.
+B-mobiles.
+					</textarea></td>
+				</tr> 
+				
+				<!-- <tr>
+					<td colspan="3" align="center">
+						<input type="submit" value="Place Order" />
+					</td>
+				</tr> -->
+			</table>
 <div id="payNow" class="container-fluid">
-<form action="./validPay" for="form" class="form-group" method="post">
+<%-- <form action="./validPay?order=${order}" for="form" class="form-group" method="post"> --%>
 <h3 class="page-header" style="color: white;">Payment Details</h3><br>
 <div class="row">
 <div class="col-sm-1"></div>
@@ -40,20 +80,19 @@ color: white;
 <label>Card Holder Name</label>
 </div>
 <div class="col-sm-5">
-<input type="text" name="name" class="form-group block" required/><span>${errorNme}</span>
+<input type="text" name="name" class="form-group block" required/><%-- <span>${errorNme}</span> --%><br><h6 style="color:red;">${errorNme}</h6>
 </div>
 </div>
-<h6 style="color:red;">${errorNme}</h6>
 <div class="row">
 <div class="col-sm-1"></div>
 <div class="col-sm-3">
 <label>Card Number</label>
 </div>
 <div class="col-sm-5">
-<input type="text" name="cardNo" class="form-group block" required/><span>${errorNo}</span>
+<input type="text" name="cardNo" class="form-group block" required/><%-- <span>${errorNo}</span> --%><br><h6 style="color:red;">${errorNo}</h6>
 </div>
 </div>
-<h6 style="color:red;">${errorNo}</h6>
+
 <div class="row">
 <div class="col-sm-1"></div>
 <div class="col-sm-3">
@@ -96,4 +135,28 @@ color: white;
 </div>
 </form>
 </body>
+<%
+   Cookie name = new Cookie("name",
+ 			  request.getParameter("name"));
+   Cookie cardNo = new Cookie("cardNo",
+			  request.getParameter("cardNo"));
+   Cookie month = new Cookie("month",
+			  request.getParameter("month"));
+   Cookie year = new Cookie("year",
+			  request.getParameter("year"));
+   Cookie ccv = new Cookie("ccv",
+			  request.getParameter("ccv"));
+
+   name.setMaxAge(0); 
+   cardNo.setMaxAge(0); 
+   month.setMaxAge(0); 
+   year.setMaxAge(0); 
+   ccv.setMaxAge(0); 
+   
+   response.addCookie( name );
+   response.addCookie( cardNo );
+   response.addCookie( month );
+   response.addCookie( year );
+   response.addCookie( ccv );
+%>
 </html>

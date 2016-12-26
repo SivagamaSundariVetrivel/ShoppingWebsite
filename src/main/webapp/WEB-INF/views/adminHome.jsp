@@ -38,13 +38,13 @@
 <form>
 <div class="row">
 <div class="col-sm-4">
-<button class="form-control" ><a href="manageProduct">Manage Product</a></button>
+<button class="btn btn-lg " ><a href="manageProduct">Manage Product</a></button>
 </div>
 <div class="col-sm-4">
-<button class="form-control"><a href="manageCategory">Manage Category</a></button>
+<button class="btn btn-lg "><a href="manageCategory">Manage Category</a></button>
 </div>
 <div class="col-sm-4">
-<button class="form-control"><a href="manageSupplier">Manage Supplier</a></button>
+<button class="btn btn-lg "><a href="manageSupplier">Manage Supplier</a></button>
 </div>
 </form>
  </div>

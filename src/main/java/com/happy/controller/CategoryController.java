@@ -53,22 +53,23 @@ public class CategoryController {
 
 	@RequestMapping(value = "saveCategory", method = RequestMethod.POST)
 	public ModelAndView getCategoryForm(@ModelAttribute("cat") Category cat,Model m) {
-	
+		String status="success";
 		List<Category> categoryLt = categoryService.getList();
-		/*for(Category cate:categoryLt)
+		for(Category cate:categoryLt)
 		{
 			if(cate.getCname().equals(cat.getCname()))
 			{
 				m.addAttribute("err", "Category already exists..");
+				status="failure";
 				break;
 			}
-			else
-			{
-				categoryService.insertRow(cat);
-			}
 		}
-		*/
-		
+		/*List catLt=categoryService.getList();
+		m.addAttribute("listCate", catLt);*/
+		if(status.equals("success"))
+		{
+			categoryService.insertRow(cat);
+		}
 		return new ModelAndView("addCategory", "listCate", categoryLt);
 	}
 
@@ -92,6 +93,8 @@ public class CategoryController {
 		cat = categoryService.getRowById(id);
 		List catLt=categoryService.getList();
 		m.addAttribute("categoryList", catLt);
+		//List catLt=categoryService.getList();
+		m.addAttribute("listCate", catLt);
 		return new ModelAndView("editCategory", "cate", cat);
 	}
 

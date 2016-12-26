@@ -1,0 +1,21 @@
+package com.happy.dao;
+
+import java.util.List;
+
+import com.happy.model.ShippingAddress;
+//import com.happy.model.ShippingAddress;
+
+public interface AddressDAO {
+	public int insertRow(ShippingAddress cate);
+
+	 public List getList();
+
+	 public ShippingAddress getRowById(int id);
+
+	 public int updateRow(ShippingAddress cate);
+
+	 public int deleteRow(int id);
+
+
+}
+

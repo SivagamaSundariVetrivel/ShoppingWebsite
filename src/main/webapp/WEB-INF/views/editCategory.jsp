@@ -15,10 +15,10 @@
 <title>Edit Category</title>
 </head>
 <body>
-<%@include file="newHead.jsp" %>
+<%@include file="mainHead.jsp" %>
 <center>
 <h2>Edit the Category ${cate.cname}</h2>
-<form:form method="post" action="./ucateateCategory" commandName="cat" enctype="multipart/form-data">
+<form:form method="post" action="./updateCategory" commandName="cat" enctype="multipart/form-data">
 <div class="row">
 <div class="col-sm-2"></div>
 <div class="col-sm-4">

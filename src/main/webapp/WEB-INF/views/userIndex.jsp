@@ -44,7 +44,7 @@
 
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
-<%@include file="newHead.jsp" %>
+<%@include file="mainHead.jsp" %>
 
 <div class="container-fluid">
  <div class="row">

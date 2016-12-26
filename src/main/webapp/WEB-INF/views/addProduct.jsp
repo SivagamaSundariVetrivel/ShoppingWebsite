@@ -28,7 +28,7 @@
 <title>Add Product</title>
 </head>
 <body>
-<%@include file="newHead.jsp" %>
+<%@include file="mainHead.jsp" %>
 <center>
 <h2>Add a new Product</h2>
 </center>
@@ -39,7 +39,7 @@
 <label for="name">Product Name:</label>
 </div>
 <div class="col-sm-5">
-<form:input path="pname" class="form-control" placeholder="Product name"/>
+<form:input path="pname" class="form-control" placeholder="Product name" required="true"/>
 </div>
 </div>
 <br>
@@ -49,7 +49,7 @@
 <label for="description">Product Description:</label>
 </div>
 <div class="col-sm-5">
-<form:input path="pdescription" placeholder="Product description" class="form-control"/>
+<form:input path="pdescription" placeholder="Product description" class="form-control" required="true"/>
 </div>
 </div>
 <br>
@@ -89,7 +89,7 @@
 <label for="stock">Product Stock:</label>
 </div>
 <div class="col-sm-5">
-<form:input path="stock" placeholder="Stock" class="form-control"/>
+<form:input path="stock" name="stock" placeholder="Stock" class="form-control" required="true"/>
 </div>
 </div>
 <br>
@@ -99,7 +99,7 @@
 <label for="price">Product Price:</label>
 </div>
 <div class="col-sm-5">
-<form:input path="price" placeholder="Product price" class="form-control"/>
+<form:input path="price" name="price" placeholder="Product price" class="form-control" required="true"/>
 </div>
 </div>
 <br>
@@ -114,6 +114,8 @@
 			<%-- <form:hidden path="fileName" value="${fileNam}"/> --%>
 </div>
 </div> 
+<br>
+<p style="color:red">${err}</p>
 <br> 
 <center>
 <button type="submit" class="btn btn-success" name="action" value="ADD">ADD</button>

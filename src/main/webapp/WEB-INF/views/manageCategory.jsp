@@ -23,7 +23,8 @@
   </style>
 </head>
 <body>
-<%@include file="newHead.jsp" %>
+<%-- <%@include file="mainHead.jsp" %> --%>
+<%@include file="mainHead.jsp" %>
 <br>
 <br>
 <center>

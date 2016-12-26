@@ -15,10 +15,13 @@
 <br>
 <br>
 <center>
+<br>
+<br>
 <div class="jumbotron">
 <h1>Thank you!!</h1>
-<h2></h2>
-<p>Click <a href="index">home</a> to go Home</p>
+<h2>Your payment was successfull!</h2>
+<h3>Products you have purchased has been mailed..</h3>
+<p>Click <a href="index">here</a> to go Home</p>
 </div>
 </center>
 </body>

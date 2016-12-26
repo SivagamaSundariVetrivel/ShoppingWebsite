@@ -15,8 +15,13 @@
 
 </head>
 <body>
-<%@include file="newHead.jsp" %>
+<%@include file="mainHead.jsp" %>
 <h4>Prooduct to sale</h4>
+<c:if test="${deletedproduct}!=null">
+<div class="alert alert-danger fade in" style="color:red; margin-left:10px;margin-right:10px;">
+				Product ${deletedproduct} has been deleted..
+		</div>
+		</c:if>
 <table class="table">
 <thead>
 <tr class="info">
@@ -24,6 +29,7 @@
 <th>Name</th>
 <th>Description</th>
 <th>Supplier</th>
+<th>Category</th>
 <th>Stock</th>
 <th>Price</th>
 <th>Image</th>
@@ -38,6 +44,7 @@
 <td>${pd.pname}</td>
 <td>${pd.pdescription}</td>
 <td>${pd.sid}</td>
+<td>${pd.cid}</td>
 <td>${pd.stock}</td>
 <td>${pd.price}</td>
 <td><img src="<c:url value="${pd.imgs}"/>" height="150px" width="100px"></td>

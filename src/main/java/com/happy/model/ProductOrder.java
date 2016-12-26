@@ -53,5 +53,16 @@ public class ProductOrder {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-        
+
+	public ProductOrder() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ProductOrder(int orderId, Product product, int quantity) {
+		super();
+		this.orderId = orderId;
+		this.product = product;
+		this.quantity = quantity;
+	}
 }

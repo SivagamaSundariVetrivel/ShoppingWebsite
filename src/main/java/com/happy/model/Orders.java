@@ -16,14 +16,10 @@ public class Orders {
 	private double totalPrice;
 	private String userName;
 	
-	@OneToOne
+	/*@OneToOne
 	@JoinColumn(name="shippingAddressId")
-	private ShippingAddress deliveryAddress;
+	private ShippingAddress deliveryAddress;*/
 	
-	@OneToOne
-	@JoinColumn(name="billingAddressId")
-	private BillingAddress billingAddress;
-
 	public int getOrderId() {
 		return orderId;
 	}
@@ -48,19 +44,25 @@ public class Orders {
 		this.userName = userName;
 	}
 
-	public ShippingAddress getDeliveryAddress() {
+/*	public ShippingAddress getDeliveryAddress() {
 		return deliveryAddress;
 	}
 
 	public void setDeliveryAddress(ShippingAddress deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
+	}*/
+
+	public Orders(double totalPrice, String userName) {
+		super();
+		this.totalPrice = totalPrice;
+		this.userName = userName;
 	}
 
-	public BillingAddress getBillingAddress() {
-		return billingAddress;
+	public Orders() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
+	
+	
 
-	public void setBillingAddress(BillingAddress billingAddress) {
-		this.billingAddress = billingAddress;
-	}
 }
