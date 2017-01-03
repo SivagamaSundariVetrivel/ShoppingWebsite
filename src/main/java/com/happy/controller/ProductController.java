@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.happy.model.Item;
 import com.happy.model.Product;
 import com.happy.services.CategoryService;
+import com.happy.services.ItemService;
 import com.happy.services.ProductService;
 import com.happy.services.SupplierService;
 
@@ -41,6 +44,9 @@ public class ProductController {
 	
 	@Autowired
 	SupplierService supplierService;
+	
+	@Autowired
+	ItemService itemService;
 	
 	@RequestMapping("/addProduct")
 	public ModelAndView toAddProduct(@ModelAttribute("prod") Product prod , Model m) {
@@ -123,8 +129,17 @@ public class ProductController {
 
 	@RequestMapping("/deleteProduct")
 	public ModelAndView toDeleteProd(@ModelAttribute("prod") Product prod, @RequestParam int id,Model m) {
-		prod=productService.getRowById(id);
-		m.addAttribute("deletedproduct", prod.getPname());
+		List<Item> itemLt=itemService.getList();
+		for(Item i:itemLt)
+		{
+				if(i.getProduct().getPid()==id)
+				{
+					itemService.deleteRow(i.getItemId());
+					productService.stockUp(id);
+				}
+		}
+		//prod=productService.getRowById(id);
+		//m.addAttribute("deletedproduct", prod.getPname());
 		productService.deleteRow(id);
 		List ls = productService.getList();
 		List ls1=supplierService.getList();
@@ -156,12 +171,6 @@ public class ProductController {
 
 	@RequestMapping(value="updateProduct", method = RequestMethod.POST)
 	public ModelAndView toUpdateProd(@ModelAttribute("prod") Product prod,ModelMap m,HttpServletRequest r) {
-		if(r.getParameter("path").isEmpty())
-		{
-			productService.updateRow(prod,prod.getImgs()); 
-		}
-		else
-		{
 		MultipartFile file = prod.getFile(); 
 		  String fileName = "";
 		  String image="";
@@ -186,7 +195,6 @@ public class ProductController {
 			   e.printStackTrace();
 			  }
 			 
-		  }
 		  productService.updateRow(prod,image); 
 		}
 		  List ls1=supplierService.getList();

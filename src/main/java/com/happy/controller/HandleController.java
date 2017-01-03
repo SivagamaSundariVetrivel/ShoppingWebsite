@@ -149,4 +149,12 @@ public class HandleController {
 			 return("CashPayment");
 		 }
 		 }*/
+	
+	@RequestMapping("/forgotPass")
+	public ModelAndView forgotPage(Model m)
+	{
+		List catLt=categoryService.getList();
+		m.addAttribute("listCate", catLt);
+		return new ModelAndView("forgotPass");
+	}
 }

@@ -31,7 +31,7 @@ public class UserDAOImpl implements UserDAO{
 	  us.setEnable(true);
 	  UserRole ur=new UserRole();
 	  ur.setRoleId(us.getUid());
-	  ur.setRoleName("ROLE_ADMIN");
+	  ur.setRoleName("ROLE_USER");
 	  ur.setRoleUserName(us.getUserName());
 	  session.saveOrUpdate(ur);
 	  session.saveOrUpdate(us);

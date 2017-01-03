@@ -89,7 +89,7 @@
 <label for="stock">Product Stock:</label>
 </div>
 <div class="col-sm-5">
-<form:input path="stock" name="stock" placeholder="Stock" class="form-control" required="true"/>
+<form:input path="stock" name="stock" placeholder="Stock" class="form-control" pattern="[0-9].{1,}" title="Please enter valid stock.." required="true"/>
 </div>
 </div>
 <br>
@@ -98,8 +98,10 @@
 <div class="col-sm-3">
 <label for="price">Product Price:</label>
 </div>
-<div class="col-sm-5">
-<form:input path="price" name="price" placeholder="Product price" class="form-control" required="true"/>
+<div class="col-sm-1">
+Rs.</div>
+<div class="col-sm-4">
+<form:input path="price" name="price" placeholder="Product price" class="form-control" pattern="[0-9].{3,}" title="Enter valid price.." required="true"/>
 </div>
 </div>
 <br>

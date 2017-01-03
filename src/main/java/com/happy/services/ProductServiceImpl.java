@@ -43,4 +43,14 @@ public class ProductServiceImpl implements ProductService {
 	 public int deleteRow(int id) {
 	  return productDAO.deleteRow(id);
 	 }
+	 
+	 @Transactional(propagation = Propagation.SUPPORTS)
+	 public Product updateStock(int id){
+		 return productDAO.updateStock(id);
+	 }
+	 
+	 @Transactional(propagation = Propagation.SUPPORTS)
+	 public Product stockUp(int id){
+		 return productDAO.stockUp(id);
+	 }
 }

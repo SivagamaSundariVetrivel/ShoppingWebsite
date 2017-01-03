@@ -9,6 +9,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>head with login</title>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="<c:url value='/resources/bootstrap-3.3.6-dist/css/bootstrap.min.css'/>" />
+  <script src="<c:url value='/resources/bootstrap-3.3.6-dist/js/jquery.min.js'/>"></script>
+  <script src="<c:url value='/resources/bootstrap-3.3.6-dist/js/bootstrap.min.js'/>"></script>
 <style>
 	/*   body{
       position: relative;
@@ -132,8 +137,8 @@ body {
                <input type="password" class="form-control" name="password" required>
             </div>
           </div><br>
-      <!-- to <a href="adminLogin" style="color:black;">ADMIN</a> Login
-      <br> -->
+       <a href="forgotPass" style="color:black;">Forgot Password</a>
+      <br> 
      <!--  <div class="checkbox">
         <label><input type="checkbox"> Remember me</label>
       </div> -->

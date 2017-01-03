@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -70,10 +71,18 @@ public class UserController {
 
 	@RequestMapping("productPage")
 	public ModelAndView productPage(@ModelAttribute ("prod")Product prod,Model m){
-		List prodLt=productService.getList();
+		List<Product> prodLt=productService.getList();
+		List<Product> prods=new ArrayList<Product>();
+		for(Product p:prodLt)
+		{
+			if(p.getStock()!=0)
+			{
+				prods.add(p);
+			}
+		}
 		List catLt=categoryService.getList();
 		m.addAttribute("listCate", catLt);
-		return new ModelAndView("productPage","listProd",prodLt);
+		return new ModelAndView("productPage","listProd",prods);
 	}
 
 	@RequestMapping("viewThatProduct")
@@ -94,7 +103,7 @@ public class UserController {
 		List<Product> list2disp=new ArrayList<Product>();
 		for(Product p:prodLt)
 		{
-			if(p.getCid()==id)
+			if((p.getCid()==id)&&(p.getStock()!=0))
 			{
 				list2disp.add(p);
 			}

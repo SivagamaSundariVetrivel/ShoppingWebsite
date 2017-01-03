@@ -14,4 +14,6 @@ public interface ItemService {
 	 public int updateRow(Item cate);
 
 	 public int deleteRow(int id);
+	 
+	 public Item updateQuantity(int id);
 }

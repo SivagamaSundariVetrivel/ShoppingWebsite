@@ -20,8 +20,18 @@ public class Item {
 	
 	//private int cartId;
 	private int quantity;
-	private String userId;
+	//private String userId;
 	
+	@OneToOne
+	@JoinColumn(name="cartId")
+	private Cart cart;
+	
+	public Cart getCart() {
+		return cart;
+	}
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
 	public int getItemId() {
 		return itemId;
 	}
@@ -40,12 +50,12 @@ public class Item {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public String getUserId() {
+	/*public String getUserId() {
 		return userId;
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
-	}
+	}*/
 	/*public int getCartId() {
 		return cartId;
 	}
@@ -57,10 +67,11 @@ public class Item {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Item(Product product, int quantity, String userId) {
+	public Item(Product product, int quantity, Cart cart) {
 		super();
 		this.product = product;
 		this.quantity = quantity;
-		this.userId = userId;
-	}	
+		this.cart = cart;
+	}
+	
 }

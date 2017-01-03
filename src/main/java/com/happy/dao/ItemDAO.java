@@ -16,6 +16,6 @@ public interface ItemDAO {
 
 	 public int deleteRow(int id);
 
-
+	 public Item updateQuantity(int id);
 }
 

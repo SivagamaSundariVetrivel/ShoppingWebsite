@@ -20,7 +20,7 @@
 <div class="jumbotron">
 <h1>Thank you!!</h1>
 <h2>Your payment was successfull!</h2>
-<h3>Products you have purchased has been mailed..</h3>
+<h3>The purchased product details have has been mailed..</h3>
 <p>Click <a href="index">here</a> to go Home</p>
 </div>
 </center>

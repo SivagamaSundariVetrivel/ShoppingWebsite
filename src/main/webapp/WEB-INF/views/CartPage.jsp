@@ -18,7 +18,6 @@
 <%@include file="mainHead.jsp" %>
 <h4>In Cart</h4>
 <table class="table">
-<h5>${modi}</h5>
 <thead>
 <tr class="info">
 <th>Image</th>
@@ -56,7 +55,7 @@
 </table>
 <div align="center">
 <a href="product" class="btn btn-success" style="color:white">Continue Shopping</a>
-<a href="OrdersPage" class="btn btn-success" style="color:white">Order Now</a>
+<a href="orderNow?id=${cartId}" class="btn btn-success" style="color:white">Order Now</a>
 </div>
 <div align="right">
 </div>

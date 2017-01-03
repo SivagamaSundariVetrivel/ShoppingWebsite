@@ -16,9 +16,9 @@ public class Orders {
 	private double totalPrice;
 	private String userName;
 	
-	/*@OneToOne
+	@OneToOne
 	@JoinColumn(name="shippingAddressId")
-	private ShippingAddress deliveryAddress;*/
+	private ShippingAddress deliveryAddress;
 	
 	public int getOrderId() {
 		return orderId;
@@ -44,18 +44,19 @@ public class Orders {
 		this.userName = userName;
 	}
 
-/*	public ShippingAddress getDeliveryAddress() {
+	public ShippingAddress getDeliveryAddress() {
 		return deliveryAddress;
 	}
 
 	public void setDeliveryAddress(ShippingAddress deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
-	}*/
+	}
 
-	public Orders(double totalPrice, String userName) {
+	public Orders(double totalPrice, String userName, ShippingAddress deliveryAddress) {
 		super();
 		this.totalPrice = totalPrice;
 		this.userName = userName;
+		this.deliveryAddress = deliveryAddress;
 	}
 
 	public Orders() {

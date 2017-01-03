@@ -54,7 +54,7 @@
 	 <div  class="col-sm-3">
       <label for="email">Email ID:</label>
 	 </div>
-	 <div  class="col-sm-6">
+	 <div  class="col-sm-6"><hidden name="recipient" value="${userBean.email}"/>
       <%-- <sf:label path="email"  type="email" class="form-control" id="email" /> --%>${userBean.email}
    	 </div>
 	</div><br>

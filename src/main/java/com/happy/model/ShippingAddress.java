@@ -22,8 +22,8 @@ public class ShippingAddress {
     private String country;
     private String zipCode;
 
-    @OneToOne
-    private Orders order;
+   /* @OneToOne
+    private Orders order;*/
     
     /*@OneToOne
     private User customer;*/
@@ -92,13 +92,13 @@ public class ShippingAddress {
 		this.zipCode = zipCode;
 	}
 
-	public Orders getOrder() {
+	/*public Orders getOrder() {
 		return order;
 	}
 
 	public void setOrder(Orders order) {
 		this.order = order;
-	}
+	}*/
 
 /*	public User getCustomer() {
 		return customer;

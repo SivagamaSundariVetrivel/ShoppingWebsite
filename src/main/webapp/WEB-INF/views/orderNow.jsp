@@ -33,7 +33,7 @@ body{
 <div id="signup" class="container-fluid">
 <br>
 <h2 class="page-header" style="color:grey;"><small>Shipping Address</small></h2>
-<form:form role="form" action="payNow?id=${order}" commandName="ship" method="post" class="form-group">
+<form:form role="form" action="payNow?id=${cartId}" commandName="ship" method="post" class="form-group">
 <br>
 <div class="row">
 <div  class="col-sm-1">
@@ -102,7 +102,7 @@ body{
     <label for="zipCode">PIN Code<span style="color:red">*</span>:</label>
 </div>
 <div  class="col-sm-6">
-    <form:input type="text" class="form-control" path="zipCode" name="adL7" required="true"  pattern="[0-9].{7}" title="Invalid PIN Code.."/> 
+    <form:input type="text" class="form-control" path="zipCode" name="adL7" required="true"  pattern="[0-9].{6}" title="Invalid PIN Code.."/> 
   </div>
 </div><br>
 <center>

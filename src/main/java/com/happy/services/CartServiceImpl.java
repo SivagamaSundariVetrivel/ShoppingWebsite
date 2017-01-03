@@ -8,44 +8,43 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.happy.dao.ItemDAO;
-import com.happy.model.Item;
+import com.happy.dao.CartDAO;
+import com.happy.model.Cart;
 
-
-
-@Service("itemService")
-public class ItemServiceImpl implements ItemService {
+@Service("cartService")
+public class CartServiceImpl implements CartService {
     
 	 @Autowired
-	 ItemDAO itemDAO;
+	 CartDAO cartDAO;
 
 	 @Transactional(propagation = Propagation.SUPPORTS)
-	 public int insertRow(Item cate) {
-	  return itemDAO.insertRow(cate);
+	 public int insertRow(Cart cate) {
+	  return cartDAO.insertRow(cate);
 	 }
 
 	 @Transactional(propagation = Propagation.SUPPORTS)
 	 public List getList() {
-	  return itemDAO.getList();
+	  return cartDAO.getList();
 	 }
 
 	 @Transactional(propagation = Propagation.SUPPORTS)
-	 public Item getRowById(int id) {
-	  return itemDAO.getRowById(id);
+	 public Cart getRowById(int id) {
+	  return cartDAO.getRowById(id);
 	 }
 
 	 @Transactional(propagation = Propagation.SUPPORTS)
-	 public int updateRow(Item cate) {
-	  return itemDAO.updateRow(cate);
+	 public int updateRow(Cart cate) {
+	  return cartDAO.updateRow(cate);
 	 }
 
 	 @Transactional(propagation = Propagation.SUPPORTS)
 	 public int deleteRow(int id) {
-	  return itemDAO.deleteRow(id);
+	  return cartDAO.deleteRow(id);
 	 }
 	 
 	 @Transactional(propagation = Propagation.SUPPORTS)
-	 public Item updateQuantity(int id){
-		 return  itemDAO.updateQuantity(id);
+	 public int updateRowById(int id,int pid)
+	 {
+		 return cartDAO.updateRowById(id,pid);
 	 }
 }

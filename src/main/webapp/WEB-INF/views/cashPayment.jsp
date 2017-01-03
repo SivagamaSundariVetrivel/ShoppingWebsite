@@ -31,7 +31,7 @@ color: white;
 </style>
 </head>
 <body>
-<form method="post" action="./sendEmail" for="form" class="form-group">
+<form method="post" action="./sendEmail?ship=${shippingDetials}" for="form" class="form-group">
 			<table border="0" width="50%">
 				<tr>
 					<!-- <td style="background-color:rgb(0, 0, 0);color:white">To:</td> -->
@@ -101,15 +101,34 @@ B-mobiles.
 <!-- <div  class="col-sm-1">
 <input type="text" name="date" placeholder="dd" class="form-group" maxlength="2" size="2" required/></div>
 <div  class="col-sm-1"></div> -->
-<div  class="col-sm-1">
-<input type="text" name="month" placeholder="mm" class="form-group" maxlength="2" size="2" required/></div>
+<div  class="col-sm-2">
+<select name="month" class="form-control">
+<option value="1">Jan</option>
+<option value="2">Feb</option>
+<option value="3">Mar</option>
+<option value="4">Apr</option>
+<option value="5">May</option>
+<option value="6">Jun</option>
+<option value="7">July</option>
+<option value="8">Aug</option>
+<option value="9">Sep</option>
+<option value="10">Oct</option>
+<option value="11">Nov</option>
+<option value="12">Dec</option>
+</select>
+<!-- <input type="text" name="month" placeholder="mm" class="form-group" maxlength="2" size="2" required/> --></div>
 <div  class="col-sm-1"></div>
-<div  class="col-sm-1">
-<input type="text" name="year" placeholder="yyyy" class="form-group" maxlength="4" size="4" required/>
+<div  class="col-sm-2">
+<!-- <input type="text" name="year" placeholder="yyyy" class="form-group" maxlength="4" size="4" required/> -->
+<select name="year" class="form-control">
+<c:forEach items="${yyyy}" var="year">
+<option value="${year}">${year}</option>
+</c:forEach>
+</select>
 </div>
 <!-- </div>
 <div class="row"> -->
-<div class="col-sm-2"></div>
+<div class="col-sm-1"></div>
 <!-- 
 <div class="col-sm-1">
 <label>CCV</label>

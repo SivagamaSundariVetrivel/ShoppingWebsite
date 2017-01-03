@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.happy.model.Cart;
 import com.happy.model.Category;
 import com.happy.model.Item;
 import com.happy.model.Orders;
@@ -26,6 +27,7 @@ import com.happy.model.ProductOrder;
 import com.happy.model.ShippingAddress;
 import com.happy.model.User;
 import com.happy.services.AddressService;
+import com.happy.services.CartService;
 import com.happy.services.CategoryService;
 import com.happy.services.ItemService;
 import com.happy.services.OrderService;
@@ -38,30 +40,25 @@ public class CartController {
 
 	@Autowired
 	CategoryService categoryService;
-	
+
 	@Autowired
 	ItemService itemService;
-	
+
 	@Autowired
-	OrderService orderService;
-	
-	@Autowired
-	AddressService addressService;
+	CartService cartService;
 	
 	@Autowired
 	ProductService productService;
 
 	@Autowired
-	ProductOrderService productOrderService;
-	
-	@Autowired
-	QuantityController quantityControl;
-	
-	@Autowired
 	UserService userService;
-	
+
 	public String username;
 
+	public CartController() {
+		System.out.println("cart Ctrl"); // TODO Auto-generated constructor stub
+	}
+	
 	@ModelAttribute
 	public String getuserdata(HttpServletRequest req) {
 		Authentication au = SecurityContextHolder.getContext().getAuthentication();
@@ -73,287 +70,216 @@ public class CartController {
 		return name;
 
 	}
-	
-	public CartController() {
-	System.out.println("cartCtrl");	// TODO Auto-generated constructor stub
-	}
-	
+
 	@RequestMapping("addToCart")
-	public ModelAndView addToCart(@ModelAttribute("item")Item item,@RequestParam int id,Model m,HttpServletRequest r)
-	{
-		if(username.equals("anonymousUser"))
-		{
+	public ModelAndView addToCart(@ModelAttribute("item") Item item, @RequestParam int id, Model m,
+			HttpServletRequest r) {
+		if (username.equals("anonymousUser")) {
 			m.addAttribute("msg", "Login to add in cart");
 			return new ModelAndView("loginvalid");
 		}
-		Product prod=productService.getRowById(id);
-		//quantityControl.deleteproductquantity(prod);
-		List<Item> itemLt=itemService.getList();
-		List<Item> items=itemLt;
-		item=null;
-		/*for(int i=0;i<items.size();i++)
+		productService.updateStock(id);
+		List<Cart> cartLt=cartService.getList();
+		Cart cart=null;
+		for(Cart c:cartLt)
 		{
-			int p=items.get(i).getProduct().getPid();
-			if((items.get(i).getUserId().equals(username))&&(p==id))
+			if(c.getUser().equals(username))
 			{
-				item=itemService.getRowById(items.get(i).getItemId());
-			}
-		}*/
-		for(Item i:itemLt)
-		{
-			if((i.getUserId().equals(username))&&(i.getProduct().getPid()==id))
-			{
-				item=itemService.getRowById(i.getItemId());
+				cart=c;
 				break;
 			}
 		}
-		Item i=item;
-		if(item==null)
+		if(cart==null)
 		{
-			item=new Item(prod,1,username);
-			itemService.insertRow(item);
+			cart=new Cart(username);
+			cartService.insertRow(cart);
 		}
-		else
-		{
-			
-			int q=i.getQuantity()+1;
-			item.setQuantity(q);
-			item.setItemId(i.getItemId());
-			item.setProduct(i.getProduct());
-			item.setUserId(username);
-			itemService.updateRow(item);
-		}
-		/*else
-		{
-			m.addAttribute("modi", "modify the quantity of product over here..");
-			List<Item> itemsLt=new ArrayList<Item>();
-			for(Item p:itemLt)
-			{
-				if(p.getUserId().equals(username))
-				{
-					itemsLt.add(p);
-				}
+		List<Item> itemLt = itemService.getList();
+		List<Item> items = itemLt;
+		item = null;
+		cartService.updateRowById(cart.getCartId(), id);
+		for (Item i : itemLt) {
+			if ((i.getCart().getCartId()==cart.getCartId()) && (i.getProduct().getPid() == id)) {
+				item = itemService.updateQuantity(i.getItemId());
+				break;
 			}
-			m.addAttribute("cart", itemsLt);
-			return new ModelAndView("CartPage");
-		}*/
-		List<Item> itemsLt=new ArrayList<Item>();
-		for(Item p:itemLt)
-		{
-			if(p.getUserId().equals(username))
-			{
+		}
+		// Item i=item;
+		if (item == null) {
+			Product prod = productService.getRowById(id);
+			item = new Item(prod, 1, cart);
+			itemService.insertRow(item);
+			itemService.updateQuantity(item.getItemId());
+		}
+		List<Item> itemsLt = new ArrayList<Item>();
+		for (Item p : itemLt) {
+			if (p.getCart().getCartId()==cart.getCartId()) {
 				itemsLt.add(p);
 			}
 		}
-		List ls2=categoryService.getList();
+		List ls2 = categoryService.getList();
 		m.addAttribute("listCate", ls2);
 		m.addAttribute("cart", itemsLt);
+		m.addAttribute("cartId", cart.getCartId());
 		return new ModelAndView("CartPage");
 	}
-	
-	@RequestMapping("OrderPage")
-	public String toOrderPage(@ModelAttribute("orderProd")ProductOrder orderProd,Model m)
-	{
-		List<Orders> ordLt=orderService.getList();
-		List<Orders> orders=new ArrayList<Orders>();
-		for(Orders p:ordLt)
-		{
-			if(p.getUserName().equals(username))
-			{
-				orders.add(p);
-			}
-		}
-		List<ProductOrder> itemLt=productOrderService.getList();
-		List<ProductOrder> itemsLt=new ArrayList<ProductOrder>();
-		for(Orders order:orders)
-		{
-		for(ProductOrder p:itemLt)
-		{
-			if(p.getOrderId()==order.getOrderId())
-			{
-				itemsLt.add(p);
-			}
-		}
-		}
-		List ls2=categoryService.getList();
-		m.addAttribute("listCate", ls2);
-		m.addAttribute("orderProd", itemsLt);
-		return "OrderPage";
-	}
 
-	
 	@RequestMapping("CartPage")
-	public String toCartPage(@ModelAttribute("item")Item item,Model m)
-	{
-		List<Item> itemLt=itemService.getList();
-		List<Item> itemsLt=new ArrayList<Item>();
-		for(Item p:itemLt)
+	public String toCartPage(@ModelAttribute("item") Item item, Model m) {
+		List<Item> itemLt = itemService.getList();
+		List<Item> itemsLt = new ArrayList<Item>();
+		List<Cart> cartLt=cartService.getList();
+		Cart cart=null;
+		for(Cart c:cartLt)
 		{
-			if(p.getUserId().equals(username))
+			if(c.getUser().equals(username))
 			{
+				cart=c;
+				break;
+			}
+		}
+		for (Item p : itemLt) {
+			if (p.getCart().getCartId()==cart.getCartId()) {
 				itemsLt.add(p);
 			}
 		}
-		List ls2=categoryService.getList();
+		if(cart==null)
+		{
+			//nothing in cart
+		}
+		List ls2 = categoryService.getList();
 		m.addAttribute("listCate", ls2);
 		m.addAttribute("cart", itemsLt);
+		m.addAttribute("cartId", cart.getCartId());
 		return "CartPage";
 	}
 
-	@RequestMapping("OrdersPage")
-	public String toOrderPage(Model m)
-	{
-		List<Item> itemLt=itemService.getList();
-		List<Item> itemsLt=new ArrayList<Item>();
-		for(Item p:itemLt)
+/*	@RequestMapping("OrdersPage")
+	public String toOrderPage(Model m) {
+		List<Item> itemLt = itemService.getList();
+		List<Item> itemsLt = new ArrayList<Item>();
+		List<Cart> cartLt=cartService.getList();
+		Cart cart=null;
+		for(Cart c:cartLt)
 		{
-			if(p.getUserId().equals(username))
+			if(c.getUser().equals(username))
 			{
+				cart=c;
+				break;
+			}
+		}
+		for (Item p : itemLt) {
+			if (p.getCart().getCartId()==cart.getCartId()) {
 				itemsLt.add(p);
 			}
 		}
-		List ls2=categoryService.getList();
+		if(cart==null)
+		{
+			//nothing in cart
+		}
+		List ls2 = categoryService.getList();
 		m.addAttribute("listCate", ls2);
 		m.addAttribute("cart", itemsLt);
 		return "OrdersPage";
-	}
+	}*/
+
 	@RequestMapping("deleteItem")
-	public String deleteItem(@ModelAttribute("item")Item item,@RequestParam int id,Model m)
-	{
+	public String deleteItem(@ModelAttribute("item") Item item, @RequestParam int id, Model m) {
+		productService.stockUp(id);
 		itemService.deleteRow(id);
-		List<Item> itemLt=itemService.getList();
-		List<Item> itemsLt=new ArrayList<Item>();
-		for(Item p:itemLt)
+		List<Item> itemLt = itemService.getList();
+		List<Item> itemsLt = new ArrayList<Item>();
+		List<Cart> cartLt=cartService.getList();
+		Cart cart=null;
+		for(Cart c:cartLt)
 		{
-			if(p.getUserId().equals(username))
+			if(c.getUser().equals(username))
 			{
+				cart=c;
+				break;
+			}
+		}
+		for (Item p : itemLt) {
+			if (p.getCart().getCartId()==cart.getCartId()) {
 				itemsLt.add(p);
 			}
 		}
-		List ls2=categoryService.getList();
+		if(cart==null)
+		{
+			//nothing in cart
+		}
+		List ls2 = categoryService.getList();
 		m.addAttribute("listCate", ls2);
 		m.addAttribute("cart", itemsLt);
+		m.addAttribute("cartId", cart.getCartId());
 		return "CartPage";
 	}
-	
-	@RequestMapping("editItem")
-	public String toEditItem(@ModelAttribute("item")Item item,@RequestParam int id,Model m)
-	{
-		item=itemService.getRowById(id);
-		m.addAttribute("itm", item);
-		return "editItem";
-	}
-	
-	@RequestMapping(value="updateItem")
-	public String updateItem(@ModelAttribute("item")Item item/*,@RequestParam int id*/,Model m,HttpServletRequest r)
-	{
-		String q=r.getParameter("quantity");
-		int quan=Integer.parseInt(q);
-		/*item=itemService.getRowById(id);*/
-		String p=r.getParameter("id");
-		int prodId=Integer.parseInt(p);
-		Product pro=productService.getRowById(prodId);
-		/*if(quan<=pro.getStock())
-		{*/
-			item.setProduct(pro);
-			item.setUserId(username);
-			item.setQuantity(quan);
-			itemService.updateRow(item);
-			return "CartPage";
-	}
-	
-	@RequestMapping("buyNow")
-	public String toBuy(@ModelAttribute("ship")ShippingAddress ship,@RequestParam int id,Model m)
-	{
-		Product prod=productService.getRowById(id);
-		Orders order=new Orders(prod.getPrice(),username);
-		orderService.insertRow(order);
-		ProductOrder prodOrd=new ProductOrder(order.getOrderId(),prod, 1);
-		productOrderService.insertRow(prodOrd);
-		 m.addAttribute("order", order.getOrderId());
-		return "orderNow";
-	}
-	
-	@RequestMapping(value="/payNow")
-	public ModelAndView toOrder(@ModelAttribute("ship")ShippingAddress ship,@RequestParam int id,HttpServletRequest r,Model m) {
-			Orders order=orderService.getRowById(id);
-			ship.setOrder(order);
-			addressService.insertRow(ship);
-			m.addAttribute("amount",order.getTotalPrice());
-			m.addAttribute("order", id);
-			List<User> userLt=userService.getList();
-			List<ProductOrder> itemLt=productOrderService.getList();
-			List<ProductOrder> items=new ArrayList<ProductOrder>(); 
-			for(User u:userLt)
-			{
-				if(u.getUserName().equals(username))
-				{
-					m.addAttribute("email",u.getEmail() );
-					break;
-				}
+
+
+	/*@RequestMapping(value = "/payNow")
+	public ModelAndView toOrder(@ModelAttribute("ship") ShippingAddress ship, @RequestParam int id,
+			HttpServletRequest r, Model m) {
+		Orders order = orderService.getRowById(id);
+		ship.setOrder(order);
+		addressService.insertRow(ship);
+		m.addAttribute("amount", order.getTotalPrice());
+		m.addAttribute("order", id);
+		List<User> userLt = userService.getList();
+		List<ProductOrder> itemLt = productOrderService.getList();
+		List<ProductOrder> items = new ArrayList<ProductOrder>();
+		for (User u : userLt) {
+			if (u.getUserName().equals(username)) {
+				m.addAttribute("email", u.getEmail());
+				break;
 			}
-			for(ProductOrder it:itemLt)
-			{
-			if(it.getOrderId()==id)
-			{
+		}
+		for (ProductOrder it : itemLt) {
+			if (it.getOrderId() == id) {
 				items.add(it);
 			}
-			}
-			m.addAttribute("cart", items);
-			m.addAttribute("shippingDetials", ship);
-//			order.setDeliveryAddress(ship);
-			return new ModelAndView("cashPayment");
-	}
-	
-	/*@RequestMapping(value="order", method = RequestMethod.POST)
-	public ModelAndView toSubmitAddress(@ModelAttribute("shipping") ShippingAddress shipping) {
-		
+		}
+		m.addAttribute("cart", items);
+		m.addAttribute("shippingDetials", ship);
+		// order.setDeliveryAddress(ship);
 		return new ModelAndView("cashPayment");
-	}*/
-	
-/*	@RequestMapping(value="/validPay",method=RequestMethod.POST)
-	public String toThankU(@RequestParam int order,HttpServletRequest req,Model m)
-	{
-	
-				
-			
-		 }*/
+	}
 	
 	@RequestMapping("orderNow")
-	public String toShippingAddress(@ModelAttribute("ship")ShippingAddress ship,@RequestParam double total,HttpServletRequest r,Model m)
-	{
-		//m.addAttribute("amount", total);
-//		Double.parseDouble(r.getParameter("price")
-		Orders order=new Orders(total,username);
+	public String toShippingAddress(@ModelAttribute("ship") ShippingAddress ship, @RequestParam double total,
+			HttpServletRequest r, Model m) {
+		// m.addAttribute("amount", total);
+		// Double.parseDouble(r.getParameter("price")
+		Orders order = new Orders(total, username);
 		// order.setTotalPrice();
 		// order.setUserName(username);
-		 orderService.insertRow(order);
-		 List<Item> itemLt=itemService.getList();
-		 List<Item> items=new ArrayList<Item>();
-		 for(Item i:itemLt)
-		 {
-			 if(i.getUserId().equals(username))
-			 {
-				 items.add(i);
-				 itemService.deleteRow(i.getItemId());
-			 }
-		 }
-		 for(Item i:items)
-		 {
-			 /*Product p=productService.getRowById(i.getProduct().getPid());
-			 p.setStock(p.getStock()-i.getQuantity());
-			 productService.updateRow(p, p.getImgs());*/
-			 ProductOrder prod=new ProductOrder(order.getOrderId(),i.getProduct(),i.getQuantity());
-			 productOrderService.insertRow(prod);
-			 
-		 }
-		 /*for(Item i:items)
-		 {
-			 Product p=productService.getRowById(i.getProduct().getPid());
-			 p.setStock(p.getStock()-i.getQuantity());
-			 productService.updateRow(p, p.getImgs());
-		 }*/
-		 m.addAttribute("order", order.getOrderId());
+		orderService.insertRow(order);
+		List<Item> itemLt = itemService.getList();
+		List<Item> items = new ArrayList<Item>();
+		List<Cart> cartLt=cartService.getList();
+		Cart cart=null;
+		for(Cart c:cartLt)
+		{
+			if(c.getUser().equals(username))
+			{
+				cart=c;
+				break;
+			}
+		}
+		for (Item p : itemLt) {
+			if (p.getCart().getCartId()==cart.getCartId()) {
+				items.add(p);
+			}
+		}
+		if(cart==null)
+		{
+			//nothing in cart
+		}
+		for (Item i : items) {
+			ProductOrder prod = new ProductOrder(order.getOrderId(), i.getProduct(), i.getQuantity());
+			productOrderService.insertRow(prod);
+
+		}
+		m.addAttribute("order", order.getOrderId());
 		return "orderNow";
-	}
+	}*/
 }

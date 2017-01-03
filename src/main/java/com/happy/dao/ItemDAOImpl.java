@@ -60,6 +60,19 @@ public class ItemDAOImpl implements ItemDAO{
 	 }
 
 	@Transactional(propagation=Propagation.SUPPORTS)
+	 public Item updateQuantity(int id) {
+	  Session session = sessionFactory.openSession();
+	  Transaction tx = session.beginTransaction();
+	  Item p = (Item) session.load(Item.class, id);
+	  p.setQuantity(p.getQuantity()+1);
+	  session.saveOrUpdate(p);
+	  tx.commit();
+	  Serializable sid = session.getIdentifier(p);
+	  session.close();
+	  return p;
+	 }
+	
+	@Transactional(propagation=Propagation.SUPPORTS)
 	 public int deleteRow(int id) {
 	  Session session = sessionFactory.openSession();
 	  Transaction tx = session.beginTransaction();

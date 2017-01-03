@@ -17,4 +17,7 @@ public interface ProductService {
 
  public int deleteRow(int id);
 
+ public Product updateStock(int id);
+ 
+ public Product stockUp(int id);
 }

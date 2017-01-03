@@ -35,7 +35,7 @@
 <label for="Name">Product Name:</label>
 </div>
 <div class="col-sm-5">
-<form:input path="pname" class="form-control" value="${pd.pname}"/>
+<form:input path="pname" class="form-control" value="${pd.pname}" required="true"/>
 </div>
 </div>
 <br>
@@ -45,7 +45,7 @@
 <label for="Description">Product Description:</label>
 </div>
 <div class="col-sm-5">
-<form:input path="pdescription" class="form-control" value="${pd.pdescription}"/>
+<form:input path="pdescription" class="form-control" value="${pd.pdescription}" required="true"/>
 </div>
 </div>
 <br>
@@ -93,7 +93,7 @@
 <label for="stock">Product Stock:</label>
 </div>
 <div class="col-sm-5">
-<form:input path="stock" class="form-control" value="${pd.stock}"/>
+<form:input path="stock" class="form-control" value="${pd.stock}" pattern="[0-9].{1,}" title="Please enter valid stock.." required="true"/>
 </div>
 </div>
 <br>
@@ -102,8 +102,10 @@
 <div class="col-sm-3">
 <label for="Price">Product Price:</label>
 </div>
+<!-- <div class="col-sm-1">
+Rs.</div> -->
 <div class="col-sm-5">
-<form:input path="price" class="form-control" value="${pd.price}"/>
+<form:input path="price" name="price" placeholder="Product price" class="form-control" value="${pd.price}" pattern="[0-9].{3,}" title="Enter valid price.." required="true"/>
 </div>
 </div>
 <br>

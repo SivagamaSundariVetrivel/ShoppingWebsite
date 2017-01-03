@@ -5,10 +5,6 @@ import java.util.List;
 
 import com.happy.model.Product;
 
-
-
-
-
 public interface ProductDAO {
  public int insertRow(Product prod,String s);
 
@@ -20,4 +16,7 @@ public interface ProductDAO {
 
  public int deleteRow(int id);
 
+ public Product updateStock(int id);
+ 
+ public Product stockUp(int id);
 }
