@@ -82,23 +82,24 @@ public class Demohandler {
 		return status;
 	}
 	
-	public String enterDB(User userBean,Model m,HttpServletRequest request)
+	public String enterDB(User userBean,MessageContext messageContext)
 	{
 		String s="success";
-	/*	List<User> usrLt=userService.getList();
+		List<User> usrLt=userService.getList();
 		for(User u:usrLt)
 		{
 			if((u.getUserName().equals(userBean.getUserName()))||(u.getEmail().equals(userBean.getEmail())))
 			{
-				m.addAttribute("msg", "Already Signed Up.. login please");
+				messageContext.addMessage(new MessageBuilder().error().source(
+						"msg").defaultText("Already Signed Up.. login please").build());
 				s="failure";
 				break;
 			}	
 		}
 		if(s.equals("success"))
-		{*/
+		{
 			userService.insertRow(userBean);
-			String recipientAddress = request.getParameter("recipient");
+			String recipientAddress = userBean.getEmail();
 			String subject = "Welcome..";
 			String message = "Welcome "+userBean.getUserName()+"\n\nYour account has been created successfully in b-mobiles.\n\nNow you can login in our website to find your mobile..\n\n\n\n\n-bmobiles";
 			String from = "sundari.vetri@gmail.com";
@@ -116,9 +117,7 @@ public class Demohandler {
 			
 			// sends the e-mail
 			mailSender.send(email);
-			List catLt=categoryService.getList();
-			m.addAttribute("listCate", catLt);
-		/*}*/
+		}
 		return s;
 	}
 }

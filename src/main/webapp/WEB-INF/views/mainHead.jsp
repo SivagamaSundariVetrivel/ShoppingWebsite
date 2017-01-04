@@ -11,9 +11,9 @@
 <title>head with login</title>
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="<c:url value='/resources/bootstrap-3.3.6-dist/css/bootstrap.min.css'/>" />
+  <%-- <link rel="stylesheet" href="<c:url value='/resources/bootstrap-3.3.6-dist/css/bootstrap.min.css'/>" />
   <script src="<c:url value='/resources/bootstrap-3.3.6-dist/js/jquery.min.js'/>"></script>
-  <script src="<c:url value='/resources/bootstrap-3.3.6-dist/js/bootstrap.min.js'/>"></script>
+  <script src="<c:url value='/resources/bootstrap-3.3.6-dist/js/bootstrap.min.js'/>"></script> --%>
 <style>
 	/*   body{
       position: relative;
@@ -116,6 +116,9 @@ body {
                  <c:if test="${not empty error}">
                 <div class="error" style="color: red;">${error}</div><br>
                 </c:if>
+                <c:forEach items="${flowRequestContext.messageContext.getMessagesBySource('msg')}" var="err">
+					  <div><span style="color:red">${err.text}</span></div>
+					</c:forEach><br />
           <c:if test="${not empty msg }">
           <div class="msg" style="color: blue;">${msg}</div><br>
           </c:if>
@@ -137,14 +140,14 @@ body {
                <input type="password" class="form-control" name="password" required>
             </div>
           </div><br>
-       <a href="forgotPass" style="color:black;">Forgot Password</a>
+       <a href="forgotPass">Forgot Password?</a>
       <br> 
      <!--  <div class="checkbox">
         <label><input type="checkbox"> Remember me</label>
       </div> -->
      <div class="modal-footer">
       <button type="submit" class="btn btn-success">LogIn</button>
-      <a type="button" href="#login" class="btn btn-danger">Reset</a>
+      <a type="reset" href="#login" class="btn btn-danger">Reset</a>
      </div>
      </div>
       <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>

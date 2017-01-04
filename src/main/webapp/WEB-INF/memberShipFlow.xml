@@ -27,12 +27,16 @@
 	</view-state>
 	
 	<action-state id="enterDB">
-		<evaluate expression="demohandler.enterDB(userBean,m,request)"></evaluate>
+		<evaluate expression="demohandler.enterDB(userBean,messageContext)"></evaluate>
 		<transition on="success" to="homeout" />
-		<transition on="failure" to="start" />
+		<transition on="failure" to="loginvalid" />
 	</action-state>
 
 	<view-state id="homeout" view="homeout" model="flowScope.userBean">
+		<!-- <transition on="edit" to="start" />
+		<transition on="submit" to="welcome" /> -->
+	</view-state>
+	<view-state id="loginvalid" view="loginvalid" model="flowScope.userBean">
 		<!-- <transition on="edit" to="start" />
 		<transition on="submit" to="welcome" /> -->
 	</view-state>

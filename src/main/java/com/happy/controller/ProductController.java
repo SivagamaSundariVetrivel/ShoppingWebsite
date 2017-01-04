@@ -24,8 +24,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.happy.model.Item;
 import com.happy.model.Product;
+import com.happy.model.ProductOrder;
 import com.happy.services.CategoryService;
 import com.happy.services.ItemService;
+import com.happy.services.ProductOrderService;
 import com.happy.services.ProductService;
 import com.happy.services.SupplierService;
 
@@ -36,6 +38,9 @@ public class ProductController {
 		System.out.println("prod control");
 	}
 
+	@Autowired
+	ProductOrderService productOrderService;
+	
 	@Autowired
 	ProductService productService;
 
@@ -77,20 +82,6 @@ public class ProductController {
 
 	@RequestMapping(value = "/saveProduct", method = RequestMethod.POST)
 	public ModelAndView getProdForm(@ModelAttribute("prod") Product prod, ModelMap m,HttpServletRequest req) {
-		  /*String price=req.getParameter("price");
-		  String quantity=req.getParameter("stock");
-		  if((Integer.parseInt("price")<=0)&&(Integer.parseInt("quantity")<=0))
-		  {
-				List productLt = productService.getList();
-				List ls1=supplierService.getList();
-				List ls2=categoryService.getList();
-				m.addAttribute("listCate", ls2);
-				m.addAttribute("sList", ls1);
-				m.addAttribute("err", "Stock and price cannot be 0 or less than 0..");
-				return new ModelAndView("addProduct", "listProd", productLt);
-		  }
-		  else
-		  {*/
 		  MultipartFile file = prod.getFile(); 
 		  String fileName = "";
 		  String image="";
@@ -101,7 +92,7 @@ public class ProductController {
 				  System.out.println("inside try");
 			  fileName = file.getOriginalFilename();
 			  byte[] filesize=file.getBytes();
-			  BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\SIVAGAMA SUNDARI\\workspace\\bmobiles\\src\\main\\webapp\\resources\\db\\Product\\" + fileName)));
+			  BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\SIVAGAMA SUNDARI\\workspace\\bmobiles1\\src\\main\\webapp\\resources\\db\\Product\\" + fileName)));
 			   bout.write(filesize);
 			   bout.close();
 			   image="/resources/db/Product/"+fileName;
@@ -124,7 +115,7 @@ public class ProductController {
 		m.addAttribute("listCate", ls2);
 		m.addAttribute("sList", ls1);
 		return new ModelAndView("addProduct", "listProd", productLt);
-		  /*}*/
+		 
 	}
 
 	@RequestMapping("/deleteProduct")
@@ -134,8 +125,17 @@ public class ProductController {
 		{
 				if(i.getProduct().getPid()==id)
 				{
-					itemService.deleteRow(i.getItemId());
-					productService.stockUp(id);
+					//productService.stockUp(id);
+					itemService.deleteRow(i.getItemId());	
+				}
+		}
+		List<ProductOrder> orderedLt=productOrderService.getList();
+		for(ProductOrder pro:orderedLt)
+		{
+				if(pro.getProduct().getPid()==id)
+				{
+					//productService.stockUp(id);
+					productOrderService.deleteRow(pro.getOrderId());	
 				}
 		}
 		//prod=productService.getRowById(id);
