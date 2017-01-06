@@ -31,7 +31,7 @@ color: white;
 </style>
 </head>
 <body>
-<form method="post" action="./sendEmail?ship=${shippingDetials}" for="form" class="form-group">
+<form method="post" action="./sendEmail?ship=${shippingDetials.shippingAddressId}" for="form" class="form-group">
 			<table border="0" width="50%">
 				<tr>
 					<!-- <td style="background-color:rgb(0, 0, 0);color:white">To:</td> -->

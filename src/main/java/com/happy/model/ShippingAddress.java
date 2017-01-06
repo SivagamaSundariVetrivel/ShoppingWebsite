@@ -27,6 +27,16 @@ public class ShippingAddress {
     
     /*@OneToOne
     private User customer;*/
+    
+    private int cartId;
+    
+	public int getCartId() {
+		return cartId;
+	}
+
+	public void setCartId(int cartId) {
+		this.cartId = cartId;
+	}
 
 	public int getShippingAddressId() {
 		return shippingAddressId;

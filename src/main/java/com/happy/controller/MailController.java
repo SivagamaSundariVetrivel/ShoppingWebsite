@@ -198,6 +198,28 @@ public class MailController {
 		 }
 		 else
 		 {
+			 /*Calendar now = Calendar.getInstance();
+				int year = now.get(Calendar.YEAR);*/
+				List<Integer> yrs=new ArrayList<Integer>();
+				for(int ig=0;ig<10;ig++)
+				{
+					yrs.add(year+ig);
+				}
+				ShippingAddress shippy=addressService.getRowById(ship);
+				Cart cart=cartService.getRowById(shippy.getCartId());
+				List<Item> allItem=itemService.getList();
+				List<Item> items=new ArrayList<Item>();
+				for(Item ite:allItem)
+				{
+					if(cart==ite.getCart())
+					{
+						items.add(ite);
+					}
+				}
+				m.addAttribute("cart", items);
+				m.addAttribute("amount", cart.getGrandTotal());
+				m.addAttribute("shippingDetials", shippy);
+				m.addAttribute("yyyy",yrs);
 			 return "cashPayment";
 		 }
 }

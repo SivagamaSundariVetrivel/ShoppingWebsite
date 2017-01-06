@@ -88,6 +88,7 @@ public class OrderController {
 	@RequestMapping(value = "/payNow")
 	public ModelAndView toOrder(@ModelAttribute("ship") ShippingAddress ship, @RequestParam int id,
 			HttpServletRequest r, Model m) {
+		ship.setCartId(id);
 		addressService.insertRow(ship);
 		List<User> userLt = userService.getList();
 		for (User u : userLt) {

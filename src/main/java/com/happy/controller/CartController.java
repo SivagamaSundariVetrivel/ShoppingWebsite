@@ -282,4 +282,16 @@ public class CartController {
 		m.addAttribute("order", order.getOrderId());
 		return "orderNow";
 	}*/
+	
+	@RequestMapping("buyNow")
+	public String toBuy(@ModelAttribute("ship")ShippingAddress ship,@RequestParam int id,Model m)
+	{
+		Cart cart=new Cart(username);
+		cartService.updateRowById(cart.getCartId(), id);
+		cartService.insertRow(cart);
+		Item item=new Item(productService.getRowById(id),1,cart);
+		itemService.insertRow(item);
+		m.addAttribute("cartId", cart.getCartId());
+		return "orderNow";
+	}
 }
