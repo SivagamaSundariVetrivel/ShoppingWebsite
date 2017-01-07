@@ -33,7 +33,7 @@ body{
 <div id="signup" class="container-fluid">
 <br>
 <h2 class="page-header" style="color:grey;"><small>Shipping Address</small></h2>
-<form:form role="form" action="payNow?id=${cartId}" commandName="ship" method="post" class="form-group">
+<form:form role="form" action="./payNow?id=${cartId}" commandName="ship" method="post" class="form-group">
 <br>
 <div class="row">
 <div  class="col-sm-1">

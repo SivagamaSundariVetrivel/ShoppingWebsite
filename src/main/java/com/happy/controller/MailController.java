@@ -211,7 +211,7 @@ public class MailController {
 				List<Item> items=new ArrayList<Item>();
 				for(Item ite:allItem)
 				{
-					if(cart==ite.getCart())
+					if(cart.getCartId()==ite.getCart().getCartId())
 					{
 						items.add(ite);
 					}
@@ -282,6 +282,14 @@ public class MailController {
 				orders.add(p);
 			}
 		}
+		List ls2 = categoryService.getList();
+		m.addAttribute("listCate", ls2);
+		if(orders==null)
+		{
+			m.addAttribute("modi", "No product is in your order");
+			m.addAttribute("pls", "Please click on Buy Now and purchased your mobile..");
+			return "noooo";
+		}
 		List<ProductOrder> itemLt = productOrderService.getList();
 		List<ProductOrder> itemsLt = new ArrayList<ProductOrder>();
 		for (Orders order : orders) {
@@ -291,8 +299,6 @@ public class MailController {
 				}
 			}
 		}
-		List ls2 = categoryService.getList();
-		m.addAttribute("listCate", ls2);
 		m.addAttribute("orderProd", itemsLt);
 		return "OrderPage";
 	}

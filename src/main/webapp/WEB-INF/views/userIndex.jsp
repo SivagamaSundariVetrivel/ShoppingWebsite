@@ -9,7 +9,7 @@
   <script src="<c:url value='/resources/bootstrap-3.3.6-dist/js/jquery.min.js'/>"></script>
   <script src="<c:url value='/resources/bootstrap-3.3.6-dist/js/bootstrap.min.js'/>"></script>
   <style>
-   /* .icon-bar {
+  /*  /* .icon-bar {
     background-color:#5f9ea0;
     }
     .navbar-inverse{
@@ -18,7 +18,7 @@
      }
 .navbar-inverse .navbar-fnt {
     color: #FFFFFF;
-} */
+} */ 
   body{
       position: relative;
       background:url("<c:url value='/resources/images/pink.png'/>");

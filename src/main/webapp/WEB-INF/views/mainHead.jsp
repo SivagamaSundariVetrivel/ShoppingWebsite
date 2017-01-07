@@ -116,9 +116,12 @@ body {
                  <c:if test="${not empty error}">
                 <div class="error" style="color: red;">${error}</div><br>
                 </c:if>
-                <c:forEach items="${flowRequestContext.messageContext.getMessagesBySource('msg')}" var="err">
+                <c:forEach items="${flowRequestContext.messageContext.getMessagesBySource('err')}" var="err">
 					  <div><span style="color:red">${err.text}</span></div>
-					</c:forEach><br />
+					</c:forEach>
+					<c:forEach items="${flowRequestContext.messageContext.getMessagesBySource('msg')}" var="msg">
+					  <div><span style="color:green">${msg.text}</span></div>
+					</c:forEach>
           <c:if test="${not empty msg }">
           <div class="msg" style="color: blue;">${msg}</div><br>
           </c:if>

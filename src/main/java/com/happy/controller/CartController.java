@@ -138,17 +138,19 @@ public class CartController {
 				break;
 			}
 		}
+		List ls2 = categoryService.getList();
+		m.addAttribute("listCate", ls2);
+		if(cart==null)
+		{
+			m.addAttribute("modi", "No product is in your cart");
+			m.addAttribute("pls", "Please click on Continue Shopping to find your new mobile..");
+			return "noooo";
+		}
 		for (Item p : itemLt) {
 			if (p.getCart().getCartId()==cart.getCartId()) {
 				itemsLt.add(p);
 			}
 		}
-		if(cart==null)
-		{
-			//nothing in cart
-		}
-		List ls2 = categoryService.getList();
-		m.addAttribute("listCate", ls2);
 		m.addAttribute("cart", itemsLt);
 		m.addAttribute("cartId", cart.getCartId());
 		return "CartPage";
@@ -287,7 +289,7 @@ public class CartController {
 	public String toBuy(@ModelAttribute("ship")ShippingAddress ship,@RequestParam int id,Model m)
 	{
 		Cart cart=new Cart(username);
-		cartService.updateRowById(cart.getCartId(), id);
+		cart.setGrandTotal(productService.getRowById(id).getPrice());
 		cartService.insertRow(cart);
 		Item item=new Item(productService.getRowById(id),1,cart);
 		itemService.insertRow(item);

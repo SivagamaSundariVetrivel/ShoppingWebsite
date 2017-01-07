@@ -43,7 +43,7 @@ color: white;
 				</tr> 
 				<tr>
 					<!-- <td style="background-color:rgb(0, 0, 0);color:white">Message:</td> -->
-					<td><textarea  cols="1" rows="1" name="message" style="display:none;">The products you have ordered are listed below:					
+					<td><textarea  cols="100" rows="10" name="message">The products you have ordered are listed below:				<!-- style="display:none;" -->	
 					<c:set var="totalPrice" value="0"></c:set><c:forEach var="pd" items="${cart}"><c:set var="totalPrice" value="${totalPrice+(pd.product.price*pd.quantity)}"></c:set>
 Product Name: ${pd.product.pname}
 Quantity: ${pd.quantity}

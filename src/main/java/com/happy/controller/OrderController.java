@@ -97,7 +97,7 @@ public class OrderController {
 				break;
 			}
 		}
-		List<Cart> cartLt=cartService.getList();
+		/*List<Cart> cartLt=cartService.getList();
 		Cart cart=null;
 		for(Cart c:cartLt)
 		{
@@ -106,18 +106,18 @@ public class OrderController {
 				cart=c;
 				break;
 			}
-		}
+		}*/
 		List<Item> allItem=itemService.getList();
 		List<Item> items=new ArrayList<Item>();
 		for(Item i:allItem)
 		{
-			if(cart==i.getCart())
+			if(id==i.getCart().getCartId())
 			{
 				items.add(i);
 			}
 		}
 		m.addAttribute("cart", items);
-		m.addAttribute("amount", cart.getGrandTotal());
+		m.addAttribute("amount", cartService.getRowById(id).getGrandTotal());
 		m.addAttribute("shippingDetials", ship);
 		Calendar now = Calendar.getInstance();
 		int year = now.get(Calendar.YEAR);

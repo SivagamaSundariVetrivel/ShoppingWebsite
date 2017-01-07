@@ -91,7 +91,7 @@ public class Demohandler {
 			if((u.getUserName().equals(userBean.getUserName()))||(u.getEmail().equals(userBean.getEmail())))
 			{
 				messageContext.addMessage(new MessageBuilder().error().source(
-						"msg").defaultText("Already Signed Up.. login please").build());
+						"err").defaultText("You have already Signed Up.. login please").build());
 				s="failure";
 				break;
 			}	
@@ -99,6 +99,8 @@ public class Demohandler {
 		if(s.equals("success"))
 		{
 			userService.insertRow(userBean);
+			messageContext.addMessage(new MessageBuilder().error().source(
+					"msg").defaultText("Your account created successfully.. login please").build());
 			String recipientAddress = userBean.getEmail();
 			String subject = "Welcome..";
 			String message = "Welcome "+userBean.getUserName()+"\n\nYour account has been created successfully in b-mobiles.\n\nNow you can login in our website to find your mobile..\n\n\n\n\n-bmobiles";
