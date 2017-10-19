@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.happy.model.Cart;
 import com.happy.model.Category;
 import com.happy.model.Item;
@@ -119,6 +120,13 @@ public class CartController {
 		}
 		List ls2 = categoryService.getList();
 		m.addAttribute("listCate", ls2);
+		/*Gson gson=new Gson();
+		String itemNed=gson.toJson(itemsLt);
+		String cartId=gson.toJson(cart.getCartId());
+		String cartPrice=gson.toJson(cart.getGrandTotal());
+		m.addAttribute("cart", itemNed);
+		m.addAttribute("cartId", cartId);
+		m.addAttribute("cartPrice", cartPrice);*/
 		m.addAttribute("cart", itemsLt);
 		m.addAttribute("cartId", cart.getCartId());
 		return new ModelAndView("CartPage");
@@ -188,7 +196,6 @@ public class CartController {
 	@RequestMapping("deleteItem")
 	public String deleteItem(@ModelAttribute("item") Item item, @RequestParam int id, Model m) {
 		productService.stockUp(id);
-		itemService.deleteRow(id);
 		List<Item> itemLt = itemService.getList();
 		List<Item> itemsLt = new ArrayList<Item>();
 		List<Cart> cartLt=cartService.getList();
@@ -201,6 +208,12 @@ public class CartController {
 				break;
 			}
 		}
+		Item ite=itemService.getRowById(id);
+		double cost=ite.getQuantity()*ite.getProduct().getPrice();
+		cart.setGrandTotal(cart.getGrandTotal()-cost);
+		cart.setUser(username);
+		cartService.updateRow(cart);
+		itemService.deleteRow(id);
 		for (Item p : itemLt) {
 			if (p.getCart().getCartId()==cart.getCartId()) {
 				itemsLt.add(p);
@@ -293,6 +306,7 @@ public class CartController {
 		cartService.insertRow(cart);
 		Item item=new Item(productService.getRowById(id),1,cart);
 		itemService.insertRow(item);
+		productService.updateStock(id);
 		m.addAttribute("cartId", cart.getCartId());
 		return "orderNow";
 	}

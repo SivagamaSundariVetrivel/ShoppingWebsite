@@ -27,9 +27,9 @@
 <th>Price</th>
 </tr>
 </thead>
-<c:set var="totalPrice" value="0"></c:set>
+<%-- <c:set var="totalPrice" value="0"></c:set> --%>
 <c:forEach var="pd" items="${orderProd}">
-<c:set var="totalPrice" value="${totalPrice+(pd.product.price*pd.quantity)}"></c:set>
+<%-- <c:set var="totalPrice" value="${totalPrice+(pd.product.price*pd.quantity)}"></c:set> --%>
 <tbody>
 <tr>
 <%-- <form:form action="editItem" commandName="item" method="post"> --%>
@@ -43,12 +43,12 @@
 </tr>
 </tbody>
 </c:forEach>
-<tr class="info">
+<%-- <tr class="info">
 <td colspan="4" align=right><strong>Total Price</strong></td>
 <td>Rs.${totalPrice}</td>
 <td></td>
 <td></td>
-<tr>
+<tr> --%>
 </table>
 <div align="center">
 <!-- <a href="product" class="btn btn-success" style="color:white">Continue Shopping</a>

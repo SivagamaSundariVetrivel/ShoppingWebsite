@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Product in Cart</title>
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<c:url value='/resources/bootstrap-3.3.6-dist/css/bootstrap.min.css'/>">
@@ -107,7 +106,7 @@ body{
 </div><br>
 <center>
   <input type="submit" class="btn btn-success" value="Submit"/>
-  <input type="reset" class="btn btn-danger" value="Cancel"/>
+  <a href="cancelOrder?id=${cartId}" class="btn btn-danger">Cancel</a>
 </center><br>
 <br>
 </form:form>

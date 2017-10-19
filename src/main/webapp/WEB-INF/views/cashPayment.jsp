@@ -43,7 +43,7 @@ color: white;
 				</tr> 
 				<tr>
 					<!-- <td style="background-color:rgb(0, 0, 0);color:white">Message:</td> -->
-					<td><textarea  cols="100" rows="10" name="message">The products you have ordered are listed below:				<!-- style="display:none;" -->	
+					<td><textarea  cols="100" rows="10"  style="display:none;" name="message">The products you have ordered are listed below:					
 					<c:set var="totalPrice" value="0"></c:set><c:forEach var="pd" items="${cart}"><c:set var="totalPrice" value="${totalPrice+(pd.product.price*pd.quantity)}"></c:set>
 Product Name: ${pd.product.pname}
 Quantity: ${pd.quantity}
@@ -151,6 +151,7 @@ B-mobiles.
 </div>
 </div>
 <input type="submit" value="Pay" class="btn btn-info btn-block"/>
+<a href="cancelOrder?id=${cartId}" class="btn btn-primary btn-block">Cancel</a>
 </div>
 </form>
 </body>

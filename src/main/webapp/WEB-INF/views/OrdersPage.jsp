@@ -26,9 +26,9 @@
 <th>Price</th>
 </tr>
 </thead>
-<c:set var="totalPrice" value="0"></c:set>
+<%-- <c:set var="totalPrice" value="0"></c:set>--%>
 <c:forEach var="pd" items="${cart}">
-<c:set var="totalPrice" value="${totalPrice+(pd.product.price*pd.quantity)}"></c:set>
+<%-- <c:set var="totalPrice" value="${totalPrice+(pd.product.price*pd.quantity)}"></c:set> --%>
 <tbody>
 <tr>
 <td><img src="<c:url value="${pd.product.imgs}"/>" height="80px" width="50px"></td>
@@ -39,10 +39,10 @@
 </tr>
 </tbody>
 </c:forEach>
-<tr class="info">
+<%-- <tr class="info">
 <td colspan="4" align=right><strong>Total Price</strong></td>
-<td>Rs.${totalPrice}</td><%-- <hidden name="total" value="${totalPrice}"/> --%>
-<tr>
+<td>Rs.${totalPrice}</td><hidden name="total" value="${totalPrice}"/>
+<tr> --%>
 </table>
 <div align="center">
 <a href="CartPage" class="btn btn-danger" style="color:white">Back</a>

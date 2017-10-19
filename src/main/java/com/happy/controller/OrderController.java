@@ -20,11 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.happy.model.Cart;
 import com.happy.model.Item;
 import com.happy.model.Orders;
+import com.happy.model.Product;
 import com.happy.model.ProductOrder;
 import com.happy.model.ShippingAddress;
 import com.happy.model.User;
 import com.happy.services.AddressService;
 import com.happy.services.CartService;
+import com.happy.services.CategoryService;
 import com.happy.services.ItemService;
 import com.happy.services.OrderService;
 import com.happy.services.ProductOrderService;
@@ -39,6 +41,9 @@ public class OrderController {
 
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	CategoryService categoryService;
 
 	@Autowired
 	ItemService itemService;
@@ -127,8 +132,65 @@ public class OrderController {
 			yrs.add(year+i);
 		}
 		m.addAttribute("yyyy",yrs);
+		m.addAttribute("cartId", id);
 		// order.setDeliveryAddress(ship);
 		return new ModelAndView("cashPayment");
 	}
-	
+
+	@RequestMapping("cancelOrder")
+	public String cancelOrder(@RequestParam int id,Model m)
+	{
+		List<Cart> allCart=cartService.getList();
+		List<Cart> cartLt=new ArrayList<Cart>();
+		int cartCount=0;
+		for(Cart c:allCart)
+		{
+			if(username.equals(c.getUser()))
+			{
+				cartLt.add(c);
+				cartCount++;
+			}
+		}
+		if(cartCount>1)
+		{
+			List<Item> allItem=itemService.getList();
+			for(Item i:allItem)
+			{
+				if(i.getCart().getCartId()==id)
+				{
+					productService.stockUp(i.getItemId());
+					itemService.deleteRow(i.getItemId());
+				}
+			}
+			List<ShippingAddress> allAddress=addressService.getList();
+			for(ShippingAddress ad:allAddress)
+			{
+				if(ad.getCartId()==id)
+				{
+					addressService.deleteRow(ad.getShippingAddressId());
+				}
+			}
+			
+			for(Cart c:cartLt)
+			{
+				if(c.getCartId()==id)
+				{
+					cartService.deleteRow(id);
+				}
+			}
+		}
+		List<Product> prodLt=productService.getList();
+		List<Product> prods=new ArrayList<Product>();
+		for(Product p:prodLt)
+		{
+			if(p.getStock()!=0)
+			{
+				prods.add(p);
+			}
+		}
+		List catLt=categoryService.getList();
+		m.addAttribute("listCate", catLt);
+		m.addAttribute("listProd",prods);		
+		return "product";
+	}
 }

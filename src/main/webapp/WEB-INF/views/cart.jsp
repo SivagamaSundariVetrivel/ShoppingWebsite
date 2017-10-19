@@ -13,12 +13,27 @@
   <link rel="stylesheet" href="<c:url value='/resources/bootstrap-3.3.6-dist/css/bootstrap.min.css'/>">
   <script src="<c:url value='/resources/bootstrap-3.3.6-dist/js/jquery.min.js'/>"></script>
   <script src="<c:url value='/resources/bootstrap-3.3.6-dist/js/bootstrap.min.js'/>"> </script>
-
+ <!-- angluarJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script> 
+  <!-- <script src="<c:url value='/resources/angular-1.5.8/angular.min.js'/>"></script> -->
+  <!-- <scrip src="/resources/bootstrap-3.3.6-dist/js/angular.min.js"></scrip> -->
+<script>
+var x=${cart};
+var y=${cartId};
+var z=${cartPrice};
+angular.module('myApp',[]).controller('CarttController',function($scope)
+		{       
+			//console.log(v);
+			$scope.cart=x;
+			$scope.cartId=y;
+			$scope.cartPrice=z;
+		});
+</script>
 </head>
 <body>
 <%@include file="mainHead.jsp" %>
 <h4>In Cart</h4>
-<table class="table">
+<table class="table" ng-app="myApp" ng-controller="CarttController">
 <thead>
 <tr class="info">
 <th>Image</th>
@@ -29,34 +44,29 @@
 <th></th><!-- <th></th> -->
 </tr>
 </thead>
-<c:set var="totalPrice" value="0"></c:set>
-<c:forEach var="pd" items="${cart}">
-<c:set var="totalPrice" value="${totalPrice+(pd.product.price*pd.quantity)}"></c:set>
 <tbody>
-<tr>
-<%-- <form:form action="editItem" commandName="item" method="post"> --%>
-<td><%-- <form:hidden path="itemId" value="${pd.itemId}"/> --%>  <img src="<c:url value="${pd.product.imgs}"/>" height="80px" width="50px"></td>
-<td>${pd.product.pname} <%-- <form:hidden path="product" value="${pd.product}"/> --%> </td>
-<td> ${pd.quantity}<%-- <form:input class="form-control" path="quantity" id="quantity" name="quantity" value="${pd.quantity}"/> --%></td>
-<td>Rs.${pd.product.price}</td>
-<td>Rs.${pd.product.price*pd.quantity}</td>
+<tr ng-repeat="pd in cart">
+<td><img ng-src="{{pd.product.imgs}}" height="80px" width="50px"></td>
+<td>{{pd.product.pname}} <%-- <form:hidden path="product" value="${pd.product}"/> --%> </td>
+<td> {{pd.quantity}}<%-- <form:input class="form-control" path="quantity" id="quantity" name="quantity" value="${pd.quantity}"/> --%></td>
+<td>Rs.{{pd.product.price}}</td>
+<td>Rs.{{pd.product.price*pd.quantity}}</td>
 <%-- <td><a type="submit" class="btn btn-warning" href="editItem?id=${pd.itemId}" commandName="item" >Update Quantity</a></td> --%>
-<td><a commandName="item" href="deleteItem?id=${pd.itemId}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+<td><a commandName="item" href="deleteItem?id={{pd.itemId}}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
 <!-- <td></td> -->
 <%-- </form:form> --%>
 </tr>
 </tbody>
-</c:forEach>
 <tr class="info">
 <td colspan="4" align=right><strong>Total Price</strong></td>
-<td>Rs.${totalPrice}</td>
+<td>Rs.{{cartPrice}}</td>
 <td></td>
 <!-- <td></td> -->
 <tr>
 </table>
 <div align="center">
 <a href="product" class="btn btn-success" style="color:white">Continue Shopping</a>
-<a href="orderNow?id=${cartId}" class="btn btn-success" style="color:white">Order Now</a>
+<a href="orderNow?id={{cartId}}" class="btn btn-success" style="color:white">Order Now</a>
 </div>
 <div align="right">
 </div>
